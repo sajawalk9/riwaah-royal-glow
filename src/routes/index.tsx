@@ -197,8 +197,8 @@ function Hero() {
       <div className="w-full grid md:grid-cols-3 items-center gap-6">
         <SectionFrame side="left">
           <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">Riwaah Presents</p>
-          <h1 className="font-serif text-6xl md:text-7xl leading-[0.95] gold-gradient">
-            NUR<br/><span className="italic text-4xl md:text-5xl">e</span><br/>ZULF
+          <h1 className="font-serif text-5xl md:text-6xl leading-[0.95] gold-gradient whitespace-nowrap">
+            NUR <span className="italic text-3xl md:text-4xl align-middle">— E —</span> ZULF
           </h1>
           <div className="ornate-divider w-32 ml-auto my-6" />
           <p className="italic text-lg text-gold-soft/90 font-serif">Heritage in every drop.</p>
@@ -307,29 +307,32 @@ function Ingredients() {
 
 function Closing() {
   return (
-    <section id="order" className="relative z-20 min-h-screen flex flex-col items-center justify-center px-6 text-center py-32">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
-        transition={{ duration: 1 }}
-        className="max-w-2xl mx-auto"
-      >
-        <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-6">200 ML · Limited Heritage Batch</p>
-        <h2 className="font-serif text-5xl md:text-6xl gold-gradient mb-6">Begin the Ritual</h2>
-        <div className="ornate-divider w-32 mx-auto mb-6" />
-        <p className="text-gold-soft/70 mb-10 max-w-md mx-auto">
-          Crafted in small batches with no mineral oil, no parabens, no sulfates. Just heritage, bottled.
-        </p>
-        <div className="flex items-center justify-center gap-4">
-          <a href="#" className="bg-gold text-olive-deep text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold-soft transition">
-            Order — PKR 2,500
-          </a>
-          <Link to="/story" className="border border-gold/60 text-gold text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold/10 transition">
-            Our Heritage
-          </Link>
-        </div>
-      </motion.div>
+    <section id="order" className="relative z-20 min-h-screen flex items-center px-6 md:px-16 py-32">
+      <div className="w-full grid md:grid-cols-2 gap-10">
+        <div className="hidden md:block" />
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false, amount: 0.4 }}
+          transition={{ duration: 1 }}
+          className="text-left md:pl-8"
+        >
+          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-6">200 ML · Limited Heritage Batch</p>
+          <h2 className="font-serif text-5xl md:text-6xl gold-gradient mb-6">Begin the Ritual</h2>
+          <div className="ornate-divider w-32 mb-6" />
+          <p className="text-gold-soft/70 mb-10 max-w-md">
+            Crafted in small batches with no mineral oil, no parabens, no sulfates. Just heritage, bottled.
+          </p>
+          <div className="flex items-center gap-4 flex-wrap">
+            <a href="#" className="bg-gold text-olive-deep text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold-soft transition">
+              Order — PKR 2,500
+            </a>
+            <Link to="/story" className="border border-gold/60 text-gold text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold/10 transition">
+              Our Heritage
+            </Link>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 }
