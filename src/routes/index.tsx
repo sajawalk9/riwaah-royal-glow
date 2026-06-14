@@ -55,10 +55,6 @@ function Index() {
           style={{ x: bottleX, y: bottleY, rotate: bottleRotate, scale: bottleScale }}
           className="relative"
         >
-          {/* Orbiting ingredients */}
-          <motion.div style={{ opacity: orbitOpacity }} className="absolute inset-0 -z-10">
-            <IngredientOrbit />
-          </motion.div>
           <motion.div
             animate={{ y: [0, -14, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
