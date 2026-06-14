@@ -97,14 +97,16 @@ function Nav() {
 }
 
 const orbitIngredients = [
-  { name: "Amla", angle: 0 },
-  { name: "Hibiscus", angle: 45 },
-  { name: "Brahmi", angle: 90 },
-  { name: "Kalonji", angle: 135 },
-  { name: "Fenugreek", angle: 180 },
-  { name: "Rosemary", angle: 225 },
-  { name: "Neem", angle: 270 },
-  { name: "Castor", angle: 315 },
+  { name: "Coconut Oil", angle: 0 },
+  { name: "Almond Oil", angle: 36 },
+  { name: "Amla Oil", angle: 72 },
+  { name: "Castor Oil", angle: 108 },
+  { name: "Rosemary", angle: 144 },
+  { name: "Hibiscus", angle: 180 },
+  { name: "Vitamin E", angle: 216 },
+  { name: "Bhringraj", angle: 252 },
+  { name: "Amr Bel", angle: 288 },
+  { name: "Brahmi", angle: 324 },
 ];
 
 function IngredientOrbit() {
@@ -267,18 +269,16 @@ function BenefitCard({ title, desc, side }: { title: string; desc: string; side:
 }
 
 const ingredientClock = [
-  { name: "Amla", symbol: "🌿" },
-  { name: "Hibiscus", symbol: "🌺" },
-  { name: "Brahmi", symbol: "🍃" },
-  { name: "Kalonji", symbol: "⚫" },
-  { name: "Fenugreek", symbol: "🌱" },
-  { name: "Rosemary", symbol: "🌾" },
-  { name: "Neem", symbol: "🌳" },
-  { name: "Castor Oil", symbol: "🫒" },
   { name: "Coconut Oil", symbol: "🥥" },
   { name: "Almond Oil", symbol: "🌰" },
-  { name: "Amarbel", symbol: "🌼" },
+  { name: "Amla Oil", symbol: "🌿" },
+  { name: "Castor Oil", symbol: "🫒" },
+  { name: "Rosemary", symbol: "🌾" },
+  { name: "Hibiscus", symbol: "🌺" },
   { name: "Vitamin E", symbol: "✦" },
+  { name: "Bhringraj", symbol: "🍃" },
+  { name: "Amr Bel", symbol: "🌼" },
+  { name: "Brahmi", symbol: "🌿" },
 ];
 
 function Ingredients() {
