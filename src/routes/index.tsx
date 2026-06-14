@@ -21,10 +21,14 @@ function Index() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
 
-  // Bottle motion — float + slight rotate + slight scale across scroll
-  const bottleY = useTransform(scrollYProgress, [0, 1], [0, -40]);
-  const bottleRotate = useTransform(scrollYProgress, [0, 0.5, 1], [-6, 4, -2]);
-  const bottleScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.05, 0.95]);
+  // Bottle motion — float, rotate, scale, slide left on final section
+  const bottleY = useTransform(scrollYProgress, [0, 1], [0, -30]);
+  const bottleRotate = useTransform(scrollYProgress, [0, 0.4, 0.75, 1], [-6, 4, -2, -10]);
+  const bottleScale = useTransform(scrollYProgress, [0, 0.5, 0.8, 1], [1, 1.05, 0.95, 0.85]);
+  // On the final "Begin the Ritual" section (last ~20% of scroll), shift bottle to the left
+  const bottleX = useTransform(scrollYProgress, [0, 0.78, 1], ["0%", "0%", "-28%"]);
+  // Ingredient orbit fades out on final section
+  const orbitOpacity = useTransform(scrollYProgress, [0, 0.75, 0.9], [1, 1, 0]);
 
   // Background hue shifts subtly per section
   const bgColor = useTransform(
@@ -50,9 +54,13 @@ function Index() {
       {/* Sticky bottle — visible throughout */}
       <div className="pointer-events-none fixed inset-0 z-10 flex items-center justify-center">
         <motion.div
-          style={{ y: bottleY, rotate: bottleRotate, scale: bottleScale }}
+          style={{ x: bottleX, y: bottleY, rotate: bottleRotate, scale: bottleScale }}
           className="relative"
         >
+          {/* Orbiting ingredients */}
+          <motion.div style={{ opacity: orbitOpacity }} className="absolute inset-0 -z-10">
+            <IngredientOrbit />
+          </motion.div>
           <motion.div
             animate={{ y: [0, -14, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
