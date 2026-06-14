@@ -90,8 +90,6 @@ function Nav() {
   return NavInner();
 }
 
-function SectionFrame({ children, side }: { children: React.ReactNode; side: "left" | "right" }) {
-
 function NavInner() {
   return (
     <header className="fixed top-0 left-0 right-0 z-40 px-6 md:px-12 py-5 flex items-center justify-between backdrop-blur-sm bg-background/20 border-b border-gold/15">
