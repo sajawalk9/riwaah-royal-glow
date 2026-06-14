@@ -27,8 +27,6 @@ function Index() {
   const bottleScale = useTransform(scrollYProgress, [0, 0.5, 0.8, 1], [1, 1.05, 0.95, 0.85]);
   // On the final "Begin the Ritual" section (last ~20% of scroll), shift bottle to the left
   const bottleX = useTransform(scrollYProgress, [0, 0.78, 1], ["0%", "0%", "-28%"]);
-  // Ingredient orbit fades out on final section
-  const orbitOpacity = useTransform(scrollYProgress, [0, 0.75, 0.9], [1, 1, 0]);
 
   // Background hue shifts subtly per section
   const bgColor = useTransform(
