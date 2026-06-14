@@ -269,18 +269,16 @@ function BenefitCard({ title, desc, side }: { title: string; desc: string; side:
 }
 
 const ingredientClock = [
-  { name: "Amla", symbol: "🌿" },
-  { name: "Hibiscus", symbol: "🌺" },
-  { name: "Brahmi", symbol: "🍃" },
-  { name: "Kalonji", symbol: "⚫" },
-  { name: "Fenugreek", symbol: "🌱" },
-  { name: "Rosemary", symbol: "🌾" },
-  { name: "Neem", symbol: "🌳" },
-  { name: "Castor Oil", symbol: "🫒" },
   { name: "Coconut Oil", symbol: "🥥" },
   { name: "Almond Oil", symbol: "🌰" },
-  { name: "Amarbel", symbol: "🌼" },
+  { name: "Amla Oil", symbol: "🌿" },
+  { name: "Castor Oil", symbol: "🫒" },
+  { name: "Rosemary", symbol: "🌾" },
+  { name: "Hibiscus", symbol: "🌺" },
   { name: "Vitamin E", symbol: "✦" },
+  { name: "Bhringraj", symbol: "🍃" },
+  { name: "Amr Bel", symbol: "🌼" },
+  { name: "Brahmi", symbol: "🌿" },
 ];
 
 function Ingredients() {
