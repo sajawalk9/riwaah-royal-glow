@@ -21,10 +21,14 @@ function Index() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
 
-  // Bottle motion — float + slight rotate + slight scale across scroll
-  const bottleY = useTransform(scrollYProgress, [0, 1], [0, -40]);
-  const bottleRotate = useTransform(scrollYProgress, [0, 0.5, 1], [-6, 4, -2]);
-  const bottleScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.05, 0.95]);
+  // Bottle motion — float, rotate, scale, slide left on final section
+  const bottleY = useTransform(scrollYProgress, [0, 1], [0, -30]);
+  const bottleRotate = useTransform(scrollYProgress, [0, 0.4, 0.75, 1], [-6, 4, -2, -10]);
+  const bottleScale = useTransform(scrollYProgress, [0, 0.5, 0.8, 1], [1, 1.05, 0.95, 0.85]);
+  // On the final "Begin the Ritual" section (last ~20% of scroll), shift bottle to the left
+  const bottleX = useTransform(scrollYProgress, [0, 0.78, 1], ["0%", "0%", "-28%"]);
+  // Ingredient orbit fades out on final section
+  const orbitOpacity = useTransform(scrollYProgress, [0, 0.75, 0.9], [1, 1, 0]);
 
   // Background hue shifts subtly per section
   const bgColor = useTransform(
@@ -50,9 +54,13 @@ function Index() {
       {/* Sticky bottle — visible throughout */}
       <div className="pointer-events-none fixed inset-0 z-10 flex items-center justify-center">
         <motion.div
-          style={{ y: bottleY, rotate: bottleRotate, scale: bottleScale }}
+          style={{ x: bottleX, y: bottleY, rotate: bottleRotate, scale: bottleScale }}
           className="relative"
         >
+          {/* Orbiting ingredients */}
+          <motion.div style={{ opacity: orbitOpacity }} className="absolute inset-0 -z-10">
+            <IngredientOrbit />
+          </motion.div>
           <motion.div
             animate={{ y: [0, -14, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -85,6 +93,69 @@ function Index() {
 }
 
 function Nav() {
+  return NavInner();
+}
+
+const orbitIngredients = [
+  { name: "Amla", angle: 0 },
+  { name: "Hibiscus", angle: 45 },
+  { name: "Brahmi", angle: 90 },
+  { name: "Kalonji", angle: 135 },
+  { name: "Fenugreek", angle: 180 },
+  { name: "Rosemary", angle: 225 },
+  { name: "Neem", angle: 270 },
+  { name: "Castor", angle: 315 },
+];
+
+function IngredientOrbit() {
+  return (
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+      className="relative w-[640px] h-[640px] -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
+      style={{ perspective: 1000 }}
+    >
+      {orbitIngredients.map((ing, i) => {
+        const rad = (ing.angle * Math.PI) / 180;
+        const radius = 320;
+        const x = Math.cos(rad) * radius;
+        const y = Math.sin(rad) * radius * 0.55;
+        return (
+          <motion.div
+            key={ing.name}
+            className="absolute left-1/2 top-1/2 pointer-events-auto"
+            style={{ x, y }}
+            animate={{ rotate: -360 }}
+            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.25 }}
+              animate={{ y: [0, -8, 0] }}
+              transition={{ y: { duration: 3 + (i % 3), repeat: Infinity, ease: "easeInOut" } }}
+              className="-translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2 cursor-pointer group"
+            >
+              <div
+                className="w-14 h-14 rounded-full border border-gold/40 backdrop-blur-md flex items-center justify-center shadow-[0_6px_20px_rgba(0,0,0,0.5)] group-hover:border-gold transition"
+                style={{
+                  background: "radial-gradient(circle at 30% 30%, oklch(0.4 0.08 130 / 0.7), oklch(0.18 0.04 145 / 0.6))",
+                }}
+              >
+                <span className="text-gold text-xl font-serif italic">
+                  {ing.name[0]}
+                </span>
+              </div>
+              <span className="text-[10px] tracking-[0.25em] uppercase text-gold/80 font-serif opacity-0 group-hover:opacity-100 transition">
+                {ing.name}
+              </span>
+            </motion.div>
+          </motion.div>
+        );
+      })}
+    </motion.div>
+  );
+}
+
+function NavInner() {
   return (
     <header className="fixed top-0 left-0 right-0 z-40 px-6 md:px-12 py-5 flex items-center justify-between backdrop-blur-sm bg-background/20 border-b border-gold/15">
       <Link to="/" className="flex items-center gap-3">
@@ -126,8 +197,8 @@ function Hero() {
       <div className="w-full grid md:grid-cols-3 items-center gap-6">
         <SectionFrame side="left">
           <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">Riwaah Presents</p>
-          <h1 className="font-serif text-6xl md:text-7xl leading-[0.95] gold-gradient">
-            NUR<br/><span className="italic text-4xl md:text-5xl">e</span><br/>ZULF
+          <h1 className="font-serif text-5xl md:text-6xl leading-[0.95] gold-gradient whitespace-nowrap">
+            NUR <span className="italic text-3xl md:text-4xl align-middle">— E —</span> ZULF
           </h1>
           <div className="ornate-divider w-32 ml-auto my-6" />
           <p className="italic text-lg text-gold-soft/90 font-serif">Heritage in every drop.</p>
@@ -236,29 +307,32 @@ function Ingredients() {
 
 function Closing() {
   return (
-    <section id="order" className="relative z-20 min-h-screen flex flex-col items-center justify-center px-6 text-center py-32">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
-        transition={{ duration: 1 }}
-        className="max-w-2xl mx-auto"
-      >
-        <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-6">200 ML · Limited Heritage Batch</p>
-        <h2 className="font-serif text-5xl md:text-6xl gold-gradient mb-6">Begin the Ritual</h2>
-        <div className="ornate-divider w-32 mx-auto mb-6" />
-        <p className="text-gold-soft/70 mb-10 max-w-md mx-auto">
-          Crafted in small batches with no mineral oil, no parabens, no sulfates. Just heritage, bottled.
-        </p>
-        <div className="flex items-center justify-center gap-4">
-          <a href="#" className="bg-gold text-olive-deep text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold-soft transition">
-            Order — PKR 2,500
-          </a>
-          <Link to="/story" className="border border-gold/60 text-gold text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold/10 transition">
-            Our Heritage
-          </Link>
-        </div>
-      </motion.div>
+    <section id="order" className="relative z-20 min-h-screen flex items-center px-6 md:px-16 py-32">
+      <div className="w-full grid md:grid-cols-2 gap-10">
+        <div className="hidden md:block" />
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false, amount: 0.4 }}
+          transition={{ duration: 1 }}
+          className="text-left md:pl-8"
+        >
+          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-6">200 ML · Limited Heritage Batch</p>
+          <h2 className="font-serif text-5xl md:text-6xl gold-gradient mb-6">Begin the Ritual</h2>
+          <div className="ornate-divider w-32 mb-6" />
+          <p className="text-gold-soft/70 mb-10 max-w-md">
+            Crafted in small batches with no mineral oil, no parabens, no sulfates. Just heritage, bottled.
+          </p>
+          <div className="flex items-center gap-4 flex-wrap">
+            <a href="#" className="bg-gold text-olive-deep text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold-soft transition">
+              Order — PKR 2,500
+            </a>
+            <Link to="/story" className="border border-gold/60 text-gold text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold/10 transition">
+              Our Heritage
+            </Link>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 }
