@@ -90,66 +90,7 @@ function Nav() {
   return NavInner();
 }
 
-const orbitIngredients = [
-  { name: "Coconut Oil", angle: 0 },
-  { name: "Almond Oil", angle: 36 },
-  { name: "Amla Oil", angle: 72 },
-  { name: "Castor Oil", angle: 108 },
-  { name: "Rosemary", angle: 144 },
-  { name: "Hibiscus", angle: 180 },
-  { name: "Vitamin E", angle: 216 },
-  { name: "Bhringraj", angle: 252 },
-  { name: "Amr Bel", angle: 288 },
-  { name: "Brahmi", angle: 324 },
-];
-
-function IngredientOrbit() {
-  return (
-    <motion.div
-      animate={{ rotate: 360 }}
-      transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-      className="relative w-[640px] h-[640px] -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
-      style={{ perspective: 1000 }}
-    >
-      {orbitIngredients.map((ing, i) => {
-        const rad = (ing.angle * Math.PI) / 180;
-        const radius = 320;
-        const x = Math.cos(rad) * radius;
-        const y = Math.sin(rad) * radius * 0.55;
-        return (
-          <motion.div
-            key={ing.name}
-            className="absolute left-1/2 top-1/2 pointer-events-auto"
-            style={{ x, y }}
-            animate={{ rotate: -360 }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-          >
-            <motion.div
-              whileHover={{ scale: 1.25 }}
-              animate={{ y: [0, -8, 0] }}
-              transition={{ y: { duration: 3 + (i % 3), repeat: Infinity, ease: "easeInOut" } }}
-              className="-translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2 cursor-pointer group"
-            >
-              <div
-                className="w-14 h-14 rounded-full border border-gold/40 backdrop-blur-md flex items-center justify-center shadow-[0_6px_20px_rgba(0,0,0,0.5)] group-hover:border-gold transition"
-                style={{
-                  background: "radial-gradient(circle at 30% 30%, oklch(0.4 0.08 130 / 0.7), oklch(0.18 0.04 145 / 0.6))",
-                }}
-              >
-                <span className="text-gold text-xl font-serif italic">
-                  {ing.name[0]}
-                </span>
-              </div>
-              <span className="text-[10px] tracking-[0.25em] uppercase text-gold/80 font-serif opacity-0 group-hover:opacity-100 transition">
-                {ing.name}
-              </span>
-            </motion.div>
-          </motion.div>
-        );
-      })}
-    </motion.div>
-  );
-}
+function SectionFrame({ children, side }: { children: React.ReactNode; side: "left" | "right" }) {
 
 function NavInner() {
   return (
