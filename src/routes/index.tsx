@@ -266,42 +266,104 @@ function BenefitCard({ title, desc, side }: { title: string; desc: string; side:
   );
 }
 
-const ingredientsLeft = ["Coconut Oil", "Almond Oil", "Castor Oil", "Amla Oil", "Vitamin E"];
-const ingredientsRight = ["Fenugreek", "Kalonji", "Brahmi", "Hibiscus", "Rosemary", "Neem", "Amarbel"];
+const ingredientClock = [
+  { name: "Amla", symbol: "🌿" },
+  { name: "Hibiscus", symbol: "🌺" },
+  { name: "Brahmi", symbol: "🍃" },
+  { name: "Kalonji", symbol: "⚫" },
+  { name: "Fenugreek", symbol: "🌱" },
+  { name: "Rosemary", symbol: "🌾" },
+  { name: "Neem", symbol: "🌳" },
+  { name: "Castor Oil", symbol: "🫒" },
+  { name: "Coconut Oil", symbol: "🥥" },
+  { name: "Almond Oil", symbol: "🌰" },
+  { name: "Amarbel", symbol: "🌼" },
+  { name: "Vitamin E", symbol: "✦" },
+];
 
 function Ingredients() {
   return (
-    <section id="ingredients" className="relative z-20 min-h-screen flex items-center px-6 md:px-16 py-32">
-      <div className="w-full grid md:grid-cols-3 items-center gap-10">
-        <SectionFrame side="left">
-          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">Base Oils</p>
-          <h2 className="font-serif text-4xl text-gold-soft mb-6">Heritage Oils</h2>
-          <div className="ornate-divider w-24 ml-auto mb-6" />
-          <ul className="space-y-3">
-            {ingredientsLeft.map((i) => (
-              <li key={i} className="font-serif text-lg text-gold-soft/90 tracking-wide">
-                {i} <span className="text-gold/50 ml-2">·</span>
-              </li>
-            ))}
-          </ul>
-        </SectionFrame>
+    <section id="ingredients" className="relative z-20 min-h-screen flex flex-col items-center justify-center px-6 md:px-16 py-32">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.3 }}
+        transition={{ duration: 0.8 }}
+        className="text-center mb-10"
+      >
+        <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">The Sacred Blend</p>
+        <h2 className="font-serif text-4xl md:text-5xl gold-gradient">Heritage Ingredients</h2>
+        <div className="ornate-divider w-32 mx-auto mt-4" />
+      </motion.div>
 
-        <div className="hidden md:block" />
-
-        <SectionFrame side="right">
-          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">Botanical Infusion</p>
-          <h2 className="font-serif text-4xl text-gold-soft mb-6">Heritage Botanicals</h2>
-          <div className="ornate-divider w-24 mb-6" />
-          <ul className="space-y-3">
-            {ingredientsRight.map((i) => (
-              <li key={i} className="font-serif text-lg text-gold-soft/90 tracking-wide">
-                <span className="text-gold/50 mr-2">·</span> {i}
-              </li>
-            ))}
-          </ul>
-        </SectionFrame>
-      </div>
+      <IngredientClock />
     </section>
+  );
+}
+
+function IngredientClock() {
+  const count = ingredientClock.length;
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.85 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: false, amount: 0.3 }}
+      transition={{ duration: 1.1, ease: "easeOut" }}
+      className="relative w-[min(90vw,640px)] aspect-square"
+    >
+      {/* Golden ring */}
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
+        className="absolute inset-0 rounded-full"
+        style={{
+          border: "1px solid oklch(0.78 0.13 85 / 0.55)",
+          boxShadow:
+            "0 0 40px oklch(0.78 0.13 85 / 0.25), inset 0 0 30px oklch(0.78 0.13 85 / 0.15)",
+        }}
+      />
+      <div
+        className="absolute inset-6 rounded-full pointer-events-none"
+        style={{ border: "1px dashed oklch(0.78 0.13 85 / 0.25)" }}
+      />
+
+      {/* Clock-positioned ingredients */}
+      {ingredientClock.map((ing, i) => {
+        const angle = (i / count) * Math.PI * 2 - Math.PI / 2;
+        const radiusPct = 50;
+        const x = 50 + Math.cos(angle) * radiusPct;
+        const y = 50 + Math.sin(angle) * radiusPct;
+        return (
+          <motion.div
+            key={ing.name}
+            className="absolute -translate-x-1/2 -translate-y-1/2"
+            style={{ left: `${x}%`, top: `${y}%` }}
+            initial={{ opacity: 0, scale: 0.6 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: i * 0.06 }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.15, y: -4 }}
+              className="flex flex-col items-center gap-1.5 cursor-pointer group"
+            >
+              <div
+                className="w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center backdrop-blur-md border border-gold/50 shadow-[0_8px_24px_rgba(0,0,0,0.5)] group-hover:border-gold transition"
+                style={{
+                  background:
+                    "radial-gradient(circle at 30% 30%, oklch(0.4 0.08 130 / 0.75), oklch(0.16 0.04 145 / 0.75))",
+                }}
+              >
+                <span className="text-2xl md:text-3xl">{ing.symbol}</span>
+              </div>
+              <span className="text-[10px] md:text-xs tracking-[0.2em] uppercase text-gold-soft font-serif whitespace-nowrap">
+                {ing.name}
+              </span>
+            </motion.div>
+          </motion.div>
+        );
+      })}
+    </motion.div>
   );
 }
 
