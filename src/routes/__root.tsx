@@ -80,11 +80,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Lovable App" },
       { name: "description", content: "Riwaah — Nur-E-Zulf luxury herbal hair oil. Heritage in every drop." },
       { name: "author", content: "Riwaah" },
-      { property: "og:title", content: "Riwaah — Nur-E-Zulf Luxury Herbal Hair Oil" },
-      { property: "og:description", content: "Heritage in every drop. A royal blend of heritage botanicals crafted to nourish, strengthen and grow your hair." },
+      { property: "og:title", content: "Lovable App" },
+      { property: "og:description", content: "Riwaah — Nur-E-Zulf luxury herbal hair oil. Heritage in every drop." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Lovable App" },
+      { name: "twitter:description", content: "Riwaah — Nur-E-Zulf luxury herbal hair oil. Heritage in every drop." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1acdfbfb-e990-4ddb-9fcc-baf72cc2e57e/id-preview-e120af44--1cb50f53-1684-40b5-a018-4a3600a596c6.lovable.app-1781454809223.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1acdfbfb-e990-4ddb-9fcc-baf72cc2e57e/id-preview-e120af44--1cb50f53-1684-40b5-a018-4a3600a596c6.lovable.app-1781454809223.png" },
     ],
     links: [
       {
