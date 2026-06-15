@@ -308,12 +308,12 @@ function Ingredients({ isMobile }: { isMobile: boolean }) {
         <div className="ornate-divider w-32 mx-auto mt-4" />
       </motion.div>
 
-      <IngredientClock />
+      <IngredientClock showInnerBottle={isMobile} />
     </section>
   );
 }
 
-function IngredientClock() {
+function IngredientClock({ showInnerBottle = false }: { showInnerBottle?: boolean }) {
   const count = ingredientClock.length;
   return (
     <motion.div
@@ -338,6 +338,21 @@ function IngredientClock() {
         className="absolute inset-6 rounded-full pointer-events-none"
         style={{ border: "1px dashed oklch(0.78 0.13 85 / 0.25)" }}
       />
+
+      {showInnerBottle && (
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="absolute inset-0 m-auto blur-3xl opacity-50 w-1/2 h-1/2"
+            style={{ background: "radial-gradient(circle, oklch(0.78 0.13 85 / 0.5), transparent 60%)" }} />
+          <motion.img
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            src={bottleAsset.url}
+            alt="Riwaah Nur-E-Zulf bottle"
+            className="h-[55%] w-auto drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
+            style={{ filter: "drop-shadow(0 0 20px rgba(212,176,99,0.3))" }}
+          />
+        </div>
+      )}
 
       {/* Clock-positioned ingredients */}
       {ingredientClock.map((ing, i) => {
