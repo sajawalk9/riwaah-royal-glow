@@ -27,9 +27,9 @@ function Index() {
   const bottleY = useTransform(scrollYProgress, [0, 1], [0, -30]);
   const bottleRotate = useTransform(scrollYProgress, [0, 0.4, 0.75, 1], [-6, 4, -2, -10]);
   // Shrink on ingredients section (~0.5–0.75) so the ring is dominant
-  const bottleScale = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [1, 0.95, 0.45, 0.8, 0.8]);
+  const bottleScale = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [1, 0.95, 0.7, 0.85, 0.85]);
   // On the final "Begin the Ritual" section (last ~20% of scroll), shift bottle to the left
-  const bottleX = useTransform(scrollYProgress, [0, 0.78, 1], ["0%", "0%", "-32%"]);
+  const bottleX = useTransform(scrollYProgress, [0, 0.78, 1], ["0%", "0%", "-22%"]);
 
   // Background hue shifts subtly per section
   const bgColor = useTransform(
