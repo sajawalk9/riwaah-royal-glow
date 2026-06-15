@@ -434,14 +434,14 @@ function Closing({ isMobile }: { isMobile: boolean }) {
   }
   return (
     <section id="order" className="relative z-20 min-h-screen flex items-center px-6 md:px-16 py-32">
-      <div className="w-full grid md:grid-cols-2 gap-10">
+      <div className="w-full grid md:grid-cols-[1fr_1.1fr] gap-10 md:pl-[6%]">
         <div className="hidden md:block" />
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: false, amount: 0.4 }}
           transition={{ duration: 1 }}
-          className="text-left md:pl-8"
+          className="text-left md:pl-0 max-w-xl"
         >
           <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-6">200 ML · Limited Heritage Batch</p>
           <h2 className="font-serif text-5xl md:text-6xl gold-gradient mb-6">Begin the Ritual</h2>
