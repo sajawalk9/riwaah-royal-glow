@@ -242,29 +242,27 @@ function Benefits({ isMobile }: { isMobile: boolean }) {
   }
   return (
     <section id="benefits" className="relative z-20 min-h-screen flex flex-col items-center px-6 md:px-16 py-32">
-      {/* Heading on top */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.4 }}
-        transition={{ duration: 0.7 }}
-        className="text-center mb-12"
-      >
-        <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">The Promise</p>
-        <h2 className="font-serif text-5xl gold-gradient">Benefits</h2>
-        <div className="ornate-divider w-32 mx-auto mt-4" />
-        <p className="text-sm text-gold-soft/70 max-w-md mx-auto mt-4">
-          Six botanicals. Five base oils. One ritual passed down through generations.
-        </p>
-      </motion.div>
       <div className="w-full grid md:grid-cols-3 items-center gap-10 flex-1">
-        <div className="space-y-12">
-          {benefits.slice(0, 2).map((b, i) => (
-            <BenefitCard key={i} {...b} side="left" />
-          ))}
+        <div className="space-y-10">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.4 }}
+            transition={{ duration: 0.8 }}
+            className="text-right md:pr-12 ml-auto max-w-md"
+          >
+            <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">The Promise</p>
+            <h2 className="font-serif text-5xl gold-gradient">Benefits</h2>
+            <div className="ornate-divider w-32 ml-auto mt-4" />
+            <p className="text-sm text-gold-soft/70 mt-4">
+              Six botanicals. Five base oils. One ritual passed down through generations.
+            </p>
+          </motion.div>
+          <BenefitCard {...benefits[0]} side="left" />
         </div>
         <div className="hidden md:block" />
         <div className="space-y-12">
+          <BenefitCard {...benefits[1]} side="right" />
           <BenefitCard {...benefits[2]} side="right" />
         </div>
       </div>
