@@ -27,9 +27,9 @@ function Index() {
   const bottleY = useTransform(scrollYProgress, [0, 1], [0, -30]);
   const bottleRotate = useTransform(scrollYProgress, [0, 0.4, 0.75, 1], [-6, 4, -2, -10]);
   // Shrink on ingredients section (~0.5–0.75) so the ring is dominant
-  const bottleScale = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [1, 0.95, 0.45, 0.8, 0.8]);
+  const bottleScale = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [1, 0.95, 0.7, 0.85, 0.85]);
   // On the final "Begin the Ritual" section (last ~20% of scroll), shift bottle to the left
-  const bottleX = useTransform(scrollYProgress, [0, 0.78, 1], ["0%", "0%", "-32%"]);
+  const bottleX = useTransform(scrollYProgress, [0, 0.78, 1], ["0%", "0%", "-22%"]);
 
   // Background hue shifts subtly per section
   const bgColor = useTransform(
@@ -242,29 +242,27 @@ function Benefits({ isMobile }: { isMobile: boolean }) {
   }
   return (
     <section id="benefits" className="relative z-20 min-h-screen flex flex-col items-center px-6 md:px-16 py-32">
-      {/* Heading on top */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.4 }}
-        transition={{ duration: 0.7 }}
-        className="text-center mb-12"
-      >
-        <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">The Promise</p>
-        <h2 className="font-serif text-5xl gold-gradient">Benefits</h2>
-        <div className="ornate-divider w-32 mx-auto mt-4" />
-        <p className="text-sm text-gold-soft/70 max-w-md mx-auto mt-4">
-          Six botanicals. Five base oils. One ritual passed down through generations.
-        </p>
-      </motion.div>
       <div className="w-full grid md:grid-cols-3 items-center gap-10 flex-1">
-        <div className="space-y-12">
-          {benefits.slice(0, 2).map((b, i) => (
-            <BenefitCard key={i} {...b} side="left" />
-          ))}
+        <div className="space-y-10">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.4 }}
+            transition={{ duration: 0.8 }}
+            className="text-right md:pr-12 ml-auto max-w-md"
+          >
+            <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">The Promise</p>
+            <h2 className="font-serif text-5xl gold-gradient">Benefits</h2>
+            <div className="ornate-divider w-32 ml-auto mt-4" />
+            <p className="text-sm text-gold-soft/70 mt-4">
+              Six botanicals. Five base oils. One ritual passed down through generations.
+            </p>
+          </motion.div>
+          <BenefitCard {...benefits[0]} side="left" />
         </div>
         <div className="hidden md:block" />
         <div className="space-y-12">
+          <BenefitCard {...benefits[1]} side="right" />
           <BenefitCard {...benefits[2]} side="right" />
         </div>
       </div>
@@ -310,12 +308,12 @@ function Ingredients({ isMobile }: { isMobile: boolean }) {
         <div className="ornate-divider w-32 mx-auto mt-4" />
       </motion.div>
 
-      <IngredientClock />
+      <IngredientClock showInnerBottle={isMobile} />
     </section>
   );
 }
 
-function IngredientClock() {
+function IngredientClock({ showInnerBottle = false }: { showInnerBottle?: boolean }) {
   const count = ingredientClock.length;
   return (
     <motion.div
@@ -340,6 +338,21 @@ function IngredientClock() {
         className="absolute inset-6 rounded-full pointer-events-none"
         style={{ border: "1px dashed oklch(0.78 0.13 85 / 0.25)" }}
       />
+
+      {showInnerBottle && (
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="absolute inset-0 m-auto blur-3xl opacity-50 w-1/2 h-1/2"
+            style={{ background: "radial-gradient(circle, oklch(0.78 0.13 85 / 0.5), transparent 60%)" }} />
+          <motion.img
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            src={bottleAsset.url}
+            alt="Riwaah Nur-E-Zulf bottle"
+            className="h-[55%] w-auto drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
+            style={{ filter: "drop-shadow(0 0 20px rgba(212,176,99,0.3))" }}
+          />
+        </div>
+      )}
 
       {/* Clock-positioned ingredients */}
       {ingredientClock.map((ing, i) => {
@@ -421,14 +434,14 @@ function Closing({ isMobile }: { isMobile: boolean }) {
   }
   return (
     <section id="order" className="relative z-20 min-h-screen flex items-center px-6 md:px-16 py-32">
-      <div className="w-full grid md:grid-cols-2 gap-10">
+      <div className="w-full grid md:grid-cols-[1fr_1.1fr] gap-10 md:pl-[6%]">
         <div className="hidden md:block" />
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: false, amount: 0.4 }}
           transition={{ duration: 1 }}
-          className="text-left md:pl-8"
+          className="text-left md:pl-0 max-w-xl"
         >
           <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-6">200 ML · Limited Heritage Batch</p>
           <h2 className="font-serif text-5xl md:text-6xl gold-gradient mb-6">Begin the Ritual</h2>
