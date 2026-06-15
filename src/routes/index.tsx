@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import bottleAsset from "@/assets/bottle.asset.json";
 import logoAsset from "@/assets/logo.asset.json";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -20,13 +21,15 @@ export const Route = createFileRoute("/")({
 function Index() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
+  const isMobile = useIsMobile();
 
   // Bottle motion — float, rotate, scale, slide left on final section
   const bottleY = useTransform(scrollYProgress, [0, 1], [0, -30]);
   const bottleRotate = useTransform(scrollYProgress, [0, 0.4, 0.75, 1], [-6, 4, -2, -10]);
-  const bottleScale = useTransform(scrollYProgress, [0, 0.5, 0.8, 1], [1, 1.05, 0.95, 0.85]);
+  // Shrink on ingredients section (~0.5–0.75) so the ring is dominant
+  const bottleScale = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [1, 0.95, 0.45, 0.8, 0.8]);
   // On the final "Begin the Ritual" section (last ~20% of scroll), shift bottle to the left
-  const bottleX = useTransform(scrollYProgress, [0, 0.78, 1], ["0%", "0%", "-28%"]);
+  const bottleX = useTransform(scrollYProgress, [0, 0.78, 1], ["0%", "0%", "-32%"]);
 
   // Background hue shifts subtly per section
   const bgColor = useTransform(
@@ -49,8 +52,9 @@ function Index() {
 
       <Nav />
 
-      {/* Sticky bottle — visible throughout */}
-      <div className="pointer-events-none fixed inset-0 z-10 flex items-center justify-center">
+      {/* Sticky bottle — desktop only; on mobile we render the bottle inline per section */}
+      {!isMobile && (
+      <div className="pointer-events-none fixed inset-0 z-0 flex items-center justify-center">
         <motion.div
           style={{ x: bottleX, y: bottleY, rotate: bottleRotate, scale: bottleScale }}
           className="relative"
@@ -66,7 +70,7 @@ function Index() {
             <img
               src={bottleAsset.url}
               alt="Riwaah Nur-E-Zulf Luxury Herbal Hair Oil bottle"
-              className="h-[78vh] w-auto max-h-[700px] drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
+              className="h-[70vh] w-auto max-h-[640px] drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
               style={{ filter: "drop-shadow(0 0 25px rgba(212,176,99,0.25))" }}
             />
             {/* Floor reflection */}
@@ -75,27 +79,25 @@ function Index() {
           </motion.div>
         </motion.div>
       </div>
+      )}
 
       {/* Scroll sections */}
-      <Hero />
-      <Benefits />
-      <Ingredients />
-      <Closing />
+      <Hero isMobile={isMobile} />
+      <Benefits isMobile={isMobile} />
+      <Ingredients isMobile={isMobile} />
+      <Closing isMobile={isMobile} />
       <Footer />
     </main>
   );
 }
 
 function Nav() {
-  return NavInner();
-}
-
-function NavInner() {
+  const [open, setOpen] = useState(false);
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 px-6 md:px-12 py-5 flex items-center justify-between backdrop-blur-sm bg-background/20 border-b border-gold/15">
+    <header className="fixed top-0 left-0 right-0 z-50 px-5 md:px-12 py-4 md:py-5 flex items-center justify-between backdrop-blur-md bg-background/40 border-b border-gold/15">
       <Link to="/" className="flex items-center gap-3">
-        <img src={logoAsset.url} alt="Riwaah" className="h-10 w-10 object-contain" />
-        <span className="font-serif text-xl tracking-[0.3em] text-gold">RIWAAH</span>
+        <img src={logoAsset.url} alt="Riwaah" className="h-9 w-9 md:h-10 md:w-10 object-contain" />
+        <span className="font-serif text-lg md:text-xl tracking-[0.3em] text-gold">RIWAAH</span>
       </Link>
       <nav className="hidden md:flex items-center gap-10 text-xs tracking-[0.25em] uppercase text-gold/80">
         <a href="#benefits" className="hover:text-gold transition">Benefits</a>
@@ -108,6 +110,24 @@ function NavInner() {
       >
         Order Now
       </a>
+      {/* Mobile menu button */}
+      <button
+        aria-label="Toggle menu"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        className="md:hidden flex flex-col justify-center items-center w-10 h-10 border border-gold/40 rounded-sm text-gold"
+      >
+        <span className={`block w-5 h-px bg-gold transition-transform ${open ? "translate-y-[3px] rotate-45" : "-translate-y-[3px]"}`} />
+        <span className={`block w-5 h-px bg-gold transition-transform ${open ? "-translate-y-[1px] -rotate-45" : "translate-y-[3px]"}`} />
+      </button>
+      {open && (
+        <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md border-b border-gold/20 flex flex-col">
+          <a onClick={() => setOpen(false)} href="#benefits" className="px-6 py-4 text-xs tracking-[0.3em] uppercase text-gold-soft border-b border-gold/10">Benefits</a>
+          <a onClick={() => setOpen(false)} href="#ingredients" className="px-6 py-4 text-xs tracking-[0.3em] uppercase text-gold-soft border-b border-gold/10">Ingredients</a>
+          <Link onClick={() => setOpen(false)} to="/story" className="px-6 py-4 text-xs tracking-[0.3em] uppercase text-gold-soft border-b border-gold/10">Heritage</Link>
+          <a onClick={() => setOpen(false)} href="#order" className="px-6 py-4 text-xs tracking-[0.3em] uppercase text-olive-deep bg-gold text-center">Order Now</a>
+        </div>
+      )}
     </header>
   );
 }
@@ -126,24 +146,41 @@ function SectionFrame({ children, side }: { children: React.ReactNode; side: "le
   );
 }
 
-function Hero() {
+function InlineBottle({ size = "h-[55vh] max-h-[420px]" }: { size?: string }) {
   return (
-    <section className="relative z-20 min-h-screen flex items-center px-6 md:px-16">
-      <div className="w-full grid md:grid-cols-3 items-center gap-6">
+    <div className="relative flex justify-center my-8">
+      <div className="absolute inset-0 -z-10 blur-3xl opacity-60"
+        style={{ background: "radial-gradient(circle, oklch(0.78 0.13 85 / 0.5), transparent 60%)" }} />
+      <motion.img
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        src={bottleAsset.url}
+        alt="Riwaah Nur-E-Zulf bottle"
+        className={`${size} w-auto drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]`}
+        style={{ filter: "drop-shadow(0 0 20px rgba(212,176,99,0.25))" }}
+      />
+    </div>
+  );
+}
+
+function Hero({ isMobile }: { isMobile: boolean }) {
+  return (
+    <section className="relative z-20 min-h-screen flex items-center px-5 md:px-16 pt-24 md:pt-0">
+      <div className="w-full grid grid-cols-1 md:grid-cols-3 items-center gap-6">
         <SectionFrame side="left">
           <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">Riwaah Presents</p>
-          <h1 className="font-serif text-5xl md:text-6xl leading-[0.95] gold-gradient whitespace-nowrap">
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl leading-[0.95] gold-gradient whitespace-nowrap">
             NUR <span className="italic text-3xl md:text-4xl align-middle">— E —</span> ZULF
           </h1>
-          <div className="ornate-divider w-32 ml-auto my-6" />
+          <div className="ornate-divider w-32 ml-auto my-6 md:ml-auto" />
           <p className="italic text-lg text-gold-soft/90 font-serif">Heritage in every drop.</p>
         </SectionFrame>
 
-        <div className="hidden md:block" />
+        {isMobile ? <InlineBottle size="h-[42vh] max-h-[360px]" /> : <div className="hidden md:block" />}
 
         <SectionFrame side="right">
           <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">Luxury Herbal Hair Oil</p>
-          <h2 className="font-serif text-3xl md:text-4xl text-gold-soft leading-tight">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-gold-soft leading-tight">
             A royal blend, crafted with tradition, perfected by time.
           </h2>
           <div className="ornate-divider w-32 my-6" />
@@ -165,10 +202,62 @@ const benefits = [
   { title: "Deep Nourishment", desc: "A rich, slow-infused oil that restores softness, shine, and the strength of well-cared-for hair." },
 ];
 
-function Benefits() {
+function Benefits({ isMobile }: { isMobile: boolean }) {
+  if (isMobile) {
+    return (
+      <section id="benefits" className="relative z-20 min-h-screen flex flex-col items-center px-5 py-24">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-8"
+        >
+          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">The Promise</p>
+          <h2 className="font-serif text-4xl gold-gradient">Benefits</h2>
+          <div className="ornate-divider w-24 mx-auto my-4" />
+          <p className="text-sm text-gold-soft/70 max-w-xs mx-auto">
+            Six botanicals. Five base oils. One ritual passed down through generations.
+          </p>
+        </motion.div>
+        <InlineBottle size="h-[38vh] max-h-[320px]" />
+        <div className="w-full max-w-sm space-y-8 mt-6">
+          {benefits.map((b, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.4 }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              className="text-center"
+            >
+              <h3 className="font-serif text-2xl text-gold-soft mb-2">{b.title}</h3>
+              <div className="ornate-divider w-16 mx-auto mb-3" />
+              <p className="text-sm text-gold-soft/70 leading-relaxed">{b.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+    );
+  }
   return (
-    <section id="benefits" className="relative z-20 min-h-screen flex items-center px-6 md:px-16 py-32">
-      <div className="w-full grid md:grid-cols-3 items-center gap-10">
+    <section id="benefits" className="relative z-20 min-h-screen flex flex-col items-center px-6 md:px-16 py-32">
+      {/* Heading on top */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.4 }}
+        transition={{ duration: 0.7 }}
+        className="text-center mb-12"
+      >
+        <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">The Promise</p>
+        <h2 className="font-serif text-5xl gold-gradient">Benefits</h2>
+        <div className="ornate-divider w-32 mx-auto mt-4" />
+        <p className="text-sm text-gold-soft/70 max-w-md mx-auto mt-4">
+          Six botanicals. Five base oils. One ritual passed down through generations.
+        </p>
+      </motion.div>
+      <div className="w-full grid md:grid-cols-3 items-center gap-10 flex-1">
         <div className="space-y-12">
           {benefits.slice(0, 2).map((b, i) => (
             <BenefitCard key={i} {...b} side="left" />
@@ -176,14 +265,6 @@ function Benefits() {
         </div>
         <div className="hidden md:block" />
         <div className="space-y-12">
-          <SectionFrame side="right">
-            <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">The Promise</p>
-            <h2 className="font-serif text-4xl md:text-5xl gold-gradient">Benefits</h2>
-            <div className="ornate-divider w-24 my-5" />
-            <p className="text-sm text-gold-soft/70 max-w-sm">
-              Six botanicals. Five base oils. One ritual passed down through generations.
-            </p>
-          </SectionFrame>
           <BenefitCard {...benefits[2]} side="right" />
         </div>
       </div>
@@ -202,21 +283,21 @@ function BenefitCard({ title, desc, side }: { title: string; desc: string; side:
 }
 
 const ingredientClock = [
-  { name: "Coconut Oil", symbol: "🥥" },
-  { name: "Almond Oil", symbol: "🌰" },
-  { name: "Amla Oil", symbol: "🌿" },
-  { name: "Castor Oil", symbol: "🫒" },
-  { name: "Rosemary", symbol: "🌾" },
-  { name: "Hibiscus", symbol: "🌺" },
+  { name: "Coconut Oil", symbol: "❋" },
+  { name: "Almond Oil", symbol: "❀" },
+  { name: "Amla Oil", symbol: "✤" },
+  { name: "Castor Oil", symbol: "✶" },
+  { name: "Rosemary", symbol: "❦" },
+  { name: "Hibiscus", symbol: "✿" },
   { name: "Vitamin E", symbol: "✦" },
-  { name: "Bhringraj", symbol: "🍃" },
-  { name: "Amr Bel", symbol: "🌼" },
-  { name: "Brahmi", symbol: "🌿" },
+  { name: "Bhringraj", symbol: "❧" },
+  { name: "Amr Bel", symbol: "✸" },
+  { name: "Brahmi", symbol: "❖" },
 ];
 
-function Ingredients() {
+function Ingredients({ isMobile }: { isMobile: boolean }) {
   return (
-    <section id="ingredients" className="relative z-20 min-h-screen flex flex-col items-center justify-center px-6 md:px-16 py-32">
+    <section id="ingredients" className="relative z-30 min-h-screen flex flex-col items-center justify-center px-5 md:px-16 py-24 md:py-32 bg-background/40">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -225,7 +306,7 @@ function Ingredients() {
         className="text-center mb-10"
       >
         <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">The Sacred Blend</p>
-        <h2 className="font-serif text-4xl md:text-5xl gold-gradient">Heritage Ingredients</h2>
+        <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl gold-gradient">Heritage Ingredients</h2>
         <div className="ornate-divider w-32 mx-auto mt-4" />
       </motion.div>
 
@@ -242,7 +323,7 @@ function IngredientClock() {
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: false, amount: 0.3 }}
       transition={{ duration: 1.1, ease: "easeOut" }}
-      className="relative w-[min(90vw,640px)] aspect-square"
+      className="relative w-[min(92vw,640px)] aspect-square"
     >
       {/* Golden ring */}
       <motion.div
@@ -281,15 +362,23 @@ function IngredientClock() {
               className="flex flex-col items-center gap-1.5 cursor-pointer group"
             >
               <div
-                className="w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center backdrop-blur-md border border-gold/50 shadow-[0_8px_24px_rgba(0,0,0,0.5)] group-hover:border-gold transition"
+                className="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center backdrop-blur-md border border-gold/60 shadow-[0_8px_24px_rgba(0,0,0,0.5)] group-hover:border-gold transition"
                 style={{
                   background:
                     "radial-gradient(circle at 30% 30%, oklch(0.4 0.08 130 / 0.75), oklch(0.16 0.04 145 / 0.75))",
                 }}
               >
-                <span className="text-2xl md:text-3xl">{ing.symbol}</span>
+                <span
+                  className="text-2xl md:text-3xl font-serif"
+                  style={{
+                    color: "oklch(0.82 0.13 85)",
+                    textShadow: "0 0 10px oklch(0.78 0.13 85 / 0.6)",
+                  }}
+                >
+                  {ing.symbol}
+                </span>
               </div>
-              <span className="text-[10px] md:text-xs tracking-[0.2em] uppercase text-gold-soft font-serif whitespace-nowrap">
+              <span className="text-[9px] md:text-xs tracking-[0.18em] uppercase text-gold-soft font-serif whitespace-nowrap">
                 {ing.name}
               </span>
             </motion.div>
@@ -300,7 +389,36 @@ function IngredientClock() {
   );
 }
 
-function Closing() {
+function Closing({ isMobile }: { isMobile: boolean }) {
+  if (isMobile) {
+    return (
+      <section id="order" className="relative z-20 min-h-screen flex flex-col items-center px-5 py-24">
+        <InlineBottle size="h-[40vh] max-h-[340px]" />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mt-6 max-w-sm"
+        >
+          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">200 ML · Limited Heritage Batch</p>
+          <h2 className="font-serif text-4xl gold-gradient mb-4">Begin the Ritual</h2>
+          <div className="ornate-divider w-32 mx-auto mb-5" />
+          <p className="text-gold-soft/70 mb-8 text-sm">
+            Crafted in small batches with no mineral oil, no parabens, no sulfates. Just heritage, bottled.
+          </p>
+          <div className="flex flex-col items-center gap-3">
+            <a href="#" className="bg-gold text-olive-deep text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold-soft transition w-full text-center">
+              Order — PKR 2,500
+            </a>
+            <Link to="/story" className="border border-gold/60 text-gold text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold/10 transition w-full text-center">
+              Our Heritage
+            </Link>
+          </div>
+        </motion.div>
+      </section>
+    );
+  }
   return (
     <section id="order" className="relative z-20 min-h-screen flex items-center px-6 md:px-16 py-32">
       <div className="w-full grid md:grid-cols-2 gap-10">
