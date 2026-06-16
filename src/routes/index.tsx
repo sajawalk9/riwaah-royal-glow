@@ -20,16 +20,16 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
+  const { scrollYProgress } = useScroll({ container: containerRef });
   const isMobile = useIsMobile();
 
   // Bottle motion — float, rotate, scale, slide left on final section
   const bottleY = useTransform(scrollYProgress, [0, 1], [0, -30]);
   const bottleRotate = useTransform(scrollYProgress, [0, 0.4, 0.75, 1], [-6, 4, -2, -10]);
   // Shrink on ingredients section (~0.5–0.75) so the ring is dominant
-  const bottleScale = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 1], [1, 0.95, 0.7, 0.85, 0.85]);
-  // On the final "Begin the Ritual" section (last ~20% of scroll), shift bottle to the left
-  const bottleX = useTransform(scrollYProgress, [0, 0.78, 1], ["0%", "0%", "-22%"]);
+  // Shrink during ingredients (~0.5–0.75) so the ring dominates; return to size on closing
+  const bottleScale = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 0.85, 1], [1, 0.9, 0.45, 0.7, 0, 0]);
+  const bottleX = useTransform(scrollYProgress, [0, 1], ["0%", "0%"]);
 
   // Background hue shifts subtly per section
   const bgColor = useTransform(
@@ -44,7 +44,10 @@ function Index() {
   );
 
   return (
-    <main ref={containerRef} className="relative">
+    <main
+      ref={containerRef}
+      className="relative h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth"
+    >
       {/* Animated background */}
       <motion.div style={{ backgroundColor: bgColor }} className="fixed inset-0 -z-20" />
       <div className="vignette fixed inset-0 -z-10 opacity-90" />
@@ -165,33 +168,66 @@ function InlineBottle({ size = "h-[55vh] max-h-[420px]" }: { size?: string }) {
 
 function Hero({ isMobile }: { isMobile: boolean }) {
   return (
-    <section className="relative z-20 min-h-screen flex items-center px-5 md:px-16 pt-24 md:pt-0">
-      <div className="w-full grid grid-cols-1 md:grid-cols-3 items-center gap-6">
-        <SectionFrame side="left">
-          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">Riwaah Presents</p>
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl leading-[0.95] gold-gradient whitespace-nowrap">
-            NUR <span className="italic text-3xl md:text-4xl align-middle">— E —</span> ZULF
-          </h1>
-          <div className="ornate-divider w-32 ml-auto my-6 md:ml-auto" />
-          <p className="italic text-lg text-gold-soft/90 font-serif">Heritage in every drop.</p>
-        </SectionFrame>
-
-        {isMobile ? <InlineBottle size="h-[42vh] max-h-[360px]" /> : <div className="hidden md:block" />}
-
-        <SectionFrame side="right">
-          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">Luxury Herbal Hair Oil</p>
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-gold-soft leading-tight">
-            A royal blend, crafted with tradition, perfected by time.
-          </h2>
-          <div className="ornate-divider w-32 my-6" />
-          <p className="text-sm text-gold-soft/70 leading-relaxed max-w-sm">
-            Inspired by generations of hair-care rituals — a luxurious infusion of heritage botanicals and nourishing oils for the hair you were meant to have.
-          </p>
-          <a href="#benefits" className="inline-block mt-8 text-xs tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1 hover:border-gold transition">
-            Discover the ritual ↓
-          </a>
-        </SectionFrame>
-      </div>
+    <section className="relative z-20 snap-start h-screen flex items-center px-5 md:px-16 pt-20 md:pt-0">
+      {isMobile ? (
+        <div className="w-full flex flex-col h-full pt-4 pb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-left"
+          >
+            <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">Riwaah Presents</p>
+            <h1 className="font-serif text-4xl leading-[0.95] gold-gradient">
+              NUR-E-ZULF
+            </h1>
+            <div className="ornate-divider w-24 my-4" />
+            <p className="italic text-base text-gold-soft/90 font-serif">Heritage in every drop.</p>
+          </motion.div>
+          <div className="flex-1 flex items-center justify-center min-h-0">
+            <InlineBottle size="h-[32vh] max-h-[280px]" />
+          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-left"
+          >
+            <p className="text-[10px] tracking-[0.4em] text-gold/70 uppercase mb-2">Luxury Herbal Hair Oil</p>
+            <p className="text-sm text-gold-soft/80 leading-relaxed">
+              Inspired by generations of hair-care rituals — a luxurious infusion of heritage botanicals for the hair you were meant to have.
+            </p>
+            <a href="#benefits" className="inline-block mt-3 text-[10px] tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1">
+              Discover the ritual ↓
+            </a>
+          </motion.div>
+        </div>
+      ) : (
+        <div className="w-full grid grid-cols-3 items-center gap-6">
+          <SectionFrame side="left">
+            <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">Riwaah Presents</p>
+            <h1 className="font-serif text-5xl md:text-6xl leading-[0.95] gold-gradient whitespace-nowrap">
+              NUR-E-ZULF
+            </h1>
+            <div className="ornate-divider w-32 ml-auto my-6" />
+            <p className="italic text-lg text-gold-soft/90 font-serif">Heritage in every drop.</p>
+          </SectionFrame>
+          <div />
+          <SectionFrame side="right">
+            <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">Luxury Herbal Hair Oil</p>
+            <h2 className="font-serif text-3xl md:text-4xl text-gold-soft leading-tight">
+              A royal blend, crafted with tradition, perfected by time.
+            </h2>
+            <div className="ornate-divider w-32 my-6" />
+            <p className="text-sm text-gold-soft/70 leading-relaxed max-w-sm">
+              Inspired by generations of hair-care rituals — a luxurious infusion of heritage botanicals and nourishing oils for the hair you were meant to have.
+            </p>
+            <a href="#benefits" className="inline-block mt-8 text-xs tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1 hover:border-gold transition">
+              Discover the ritual ↓
+            </a>
+          </SectionFrame>
+        </div>
+      )}
     </section>
   );
 }
@@ -205,35 +241,33 @@ const benefits = [
 function Benefits({ isMobile }: { isMobile: boolean }) {
   if (isMobile) {
     return (
-      <section id="benefits" className="relative z-20 min-h-screen flex flex-col items-center px-5 py-24">
+      <section id="benefits" className="relative z-20 snap-start h-screen flex flex-col items-center px-5 pt-20 pb-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.3 }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-8"
+          className="text-center mb-3"
         >
-          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">The Promise</p>
-          <h2 className="font-serif text-4xl gold-gradient">Benefits</h2>
-          <div className="ornate-divider w-24 mx-auto my-4" />
-          <p className="text-sm text-gold-soft/70 max-w-xs mx-auto">
-            Six botanicals. Five base oils. One ritual passed down through generations.
-          </p>
+          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-2">The Promise</p>
+          <h2 className="font-serif text-3xl gold-gradient">Benefits</h2>
+          <div className="ornate-divider w-20 mx-auto my-2" />
         </motion.div>
-        <InlineBottle size="h-[38vh] max-h-[320px]" />
-        <div className="w-full max-w-sm space-y-8 mt-6">
+        <div className="flex-1 min-h-0 flex items-center">
+          <InlineBottle size="h-[26vh] max-h-[220px]" />
+        </div>
+        <div className="w-full max-w-sm space-y-3">
           {benefits.map((b, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.4 }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
               className="text-center"
             >
-              <h3 className="font-serif text-2xl text-gold-soft mb-2">{b.title}</h3>
-              <div className="ornate-divider w-16 mx-auto mb-3" />
-              <p className="text-sm text-gold-soft/70 leading-relaxed">{b.desc}</p>
+              <h3 className="font-serif text-base text-gold-soft">{b.title}</h3>
+              <p className="text-[11px] text-gold-soft/70 leading-snug">{b.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -241,7 +275,7 @@ function Benefits({ isMobile }: { isMobile: boolean }) {
     );
   }
   return (
-    <section id="benefits" className="relative z-20 min-h-screen flex flex-col items-center px-6 md:px-16 py-32">
+    <section id="benefits" className="relative z-20 snap-start h-screen flex flex-col items-center px-6 md:px-16 py-24">
       <div className="w-full grid md:grid-cols-3 items-center gap-10 flex-1">
         <div className="space-y-10">
           <motion.div
@@ -295,7 +329,7 @@ const ingredientClock = [
 
 function Ingredients({ isMobile }: { isMobile: boolean }) {
   return (
-    <section id="ingredients" className="relative z-30 min-h-screen flex flex-col items-center justify-center px-5 md:px-16 py-24 md:py-32 bg-background/40">
+    <section id="ingredients" className="relative z-30 snap-start h-screen flex flex-col items-center justify-center px-5 md:px-16 py-16 bg-background/40">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -405,7 +439,7 @@ function IngredientClock({ showInnerBottle = false }: { showInnerBottle?: boolea
 function Closing({ isMobile }: { isMobile: boolean }) {
   if (isMobile) {
     return (
-      <section id="order" className="relative z-20 min-h-screen flex flex-col items-center px-5 py-24">
+      <section id="order" className="relative z-20 snap-start h-screen flex flex-col items-center justify-center px-5 py-16">
         <InlineBottle size="h-[40vh] max-h-[340px]" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -433,23 +467,23 @@ function Closing({ isMobile }: { isMobile: boolean }) {
     );
   }
   return (
-    <section id="order" className="relative z-20 min-h-screen flex items-center px-6 md:px-16 py-32">
-      <div className="w-full grid md:grid-cols-[1fr_1.1fr] gap-10 md:pl-[6%]">
-        <div className="hidden md:block" />
+    <section id="order" className="relative z-20 snap-start h-screen flex items-center justify-center px-6 md:px-16 py-24">
+      <div className="w-full flex flex-col items-center justify-center gap-6">
+        <InlineBottle size="h-[38vh] max-h-[340px]" />
         <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.4 }}
           transition={{ duration: 1 }}
-          className="text-left md:pl-0 max-w-xl"
+          className="text-center max-w-xl"
         >
-          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-6">200 ML · Limited Heritage Batch</p>
-          <h2 className="font-serif text-5xl md:text-6xl gold-gradient mb-6">Begin the Ritual</h2>
-          <div className="ornate-divider w-32 mb-6" />
-          <p className="text-gold-soft/70 mb-10 max-w-md">
+          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">200 ML · Limited Heritage Batch</p>
+          <h2 className="font-serif text-4xl md:text-5xl gold-gradient mb-3">Begin the Ritual</h2>
+          <div className="ornate-divider w-32 mb-4 mx-auto" />
+          <p className="text-gold-soft/70 mb-6 max-w-md mx-auto">
             Crafted in small batches with no mineral oil, no parabens, no sulfates. Just heritage, bottled.
           </p>
-          <div className="flex items-center gap-4 flex-wrap">
+          <div className="flex items-center justify-center gap-4 flex-wrap">
             <a href="#" className="bg-gold text-olive-deep text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold-soft transition">
               Order — PKR 2,500
             </a>
