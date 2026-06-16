@@ -468,7 +468,8 @@ function Closing({ isMobile }: { isMobile: boolean }) {
   }
   return (
     <section id="order" className="relative z-20 snap-start h-screen flex items-center justify-center px-6 md:px-16 py-24">
-      <div className="w-full flex items-center justify-center">
+      <div className="w-full flex flex-col items-center justify-center gap-6">
+        <InlineBottle size="h-[38vh] max-h-[340px]" />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -476,10 +477,10 @@ function Closing({ isMobile }: { isMobile: boolean }) {
           transition={{ duration: 1 }}
           className="text-center max-w-xl"
         >
-          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-6">200 ML · Limited Heritage Batch</p>
-          <h2 className="font-serif text-5xl md:text-6xl gold-gradient mb-6">Begin the Ritual</h2>
-          <div className="ornate-divider w-32 mb-6 mx-auto" />
-          <p className="text-gold-soft/70 mb-10 max-w-md mx-auto">
+          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">200 ML · Limited Heritage Batch</p>
+          <h2 className="font-serif text-4xl md:text-5xl gold-gradient mb-3">Begin the Ritual</h2>
+          <div className="ornate-divider w-32 mb-4 mx-auto" />
+          <p className="text-gold-soft/70 mb-6 max-w-md mx-auto">
             Crafted in small batches with no mineral oil, no parabens, no sulfates. Just heritage, bottled.
           </p>
           <div className="flex items-center justify-center gap-4 flex-wrap">
