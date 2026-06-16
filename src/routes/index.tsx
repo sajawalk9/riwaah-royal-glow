@@ -44,7 +44,10 @@ function Index() {
   );
 
   return (
-    <main ref={containerRef} className="relative">
+    <main
+      ref={containerRef}
+      className="relative h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth"
+    >
       {/* Animated background */}
       <motion.div style={{ backgroundColor: bgColor }} className="fixed inset-0 -z-20" />
       <div className="vignette fixed inset-0 -z-10 opacity-90" />
