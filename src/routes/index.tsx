@@ -329,17 +329,17 @@ const ingredientClock = [
 
 function Ingredients({ isMobile }: { isMobile: boolean }) {
   return (
-    <section id="ingredients" className="relative z-30 snap-start h-screen flex flex-col items-center justify-center px-5 md:px-16 py-16 bg-background/40">
+    <section id="ingredients" className="relative z-30 snap-start h-screen flex flex-col items-center justify-center px-5 md:px-16 pt-20 pb-6 md:pt-24 md:pb-10 bg-background/40 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.3 }}
         transition={{ duration: 0.8 }}
-        className="text-center mb-10"
+        className="text-center mb-4 md:mb-6"
       >
         <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">The Sacred Blend</p>
-        <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl gold-gradient">Heritage Ingredients</h2>
-        <div className="ornate-divider w-32 mx-auto mt-4" />
+        <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl gold-gradient">Heritage Ingredients</h2>
+        <div className="ornate-divider w-24 mx-auto mt-3" />
       </motion.div>
 
       <IngredientClock showInnerBottle={isMobile} />
@@ -355,7 +355,8 @@ function IngredientClock({ showInnerBottle = false }: { showInnerBottle?: boolea
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: false, amount: 0.3 }}
       transition={{ duration: 1.1, ease: "easeOut" }}
-      className="relative w-[min(92vw,640px)] aspect-square"
+      className="relative aspect-square"
+      style={{ width: "min(82vw, 68vh, 560px)" }}
     >
       {/* Golden ring */}
       <motion.div
