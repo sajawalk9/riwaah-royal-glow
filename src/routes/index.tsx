@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
+  const { scrollYProgress } = useScroll({ container: containerRef });
   const isMobile = useIsMobile();
 
   // Bottle motion — float, rotate, scale, slide left on final section
