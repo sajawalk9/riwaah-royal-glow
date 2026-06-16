@@ -168,33 +168,66 @@ function InlineBottle({ size = "h-[55vh] max-h-[420px]" }: { size?: string }) {
 
 function Hero({ isMobile }: { isMobile: boolean }) {
   return (
-    <section className="relative z-20 min-h-screen flex items-center px-5 md:px-16 pt-24 md:pt-0">
-      <div className="w-full grid grid-cols-1 md:grid-cols-3 items-center gap-6">
-        <SectionFrame side="left">
-          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">Riwaah Presents</p>
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl leading-[0.95] gold-gradient whitespace-nowrap">
-            NUR <span className="italic text-3xl md:text-4xl align-middle">— E —</span> ZULF
-          </h1>
-          <div className="ornate-divider w-32 ml-auto my-6 md:ml-auto" />
-          <p className="italic text-lg text-gold-soft/90 font-serif">Heritage in every drop.</p>
-        </SectionFrame>
-
-        {isMobile ? <InlineBottle size="h-[42vh] max-h-[360px]" /> : <div className="hidden md:block" />}
-
-        <SectionFrame side="right">
-          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">Luxury Herbal Hair Oil</p>
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-gold-soft leading-tight">
-            A royal blend, crafted with tradition, perfected by time.
-          </h2>
-          <div className="ornate-divider w-32 my-6" />
-          <p className="text-sm text-gold-soft/70 leading-relaxed max-w-sm">
-            Inspired by generations of hair-care rituals — a luxurious infusion of heritage botanicals and nourishing oils for the hair you were meant to have.
-          </p>
-          <a href="#benefits" className="inline-block mt-8 text-xs tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1 hover:border-gold transition">
-            Discover the ritual ↓
-          </a>
-        </SectionFrame>
-      </div>
+    <section className="relative z-20 snap-start h-screen flex items-center px-5 md:px-16 pt-20 md:pt-0">
+      {isMobile ? (
+        <div className="w-full flex flex-col h-full pt-4 pb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-left"
+          >
+            <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">Riwaah Presents</p>
+            <h1 className="font-serif text-4xl leading-[0.95] gold-gradient">
+              NUR-E-ZULF
+            </h1>
+            <div className="ornate-divider w-24 my-4" />
+            <p className="italic text-base text-gold-soft/90 font-serif">Heritage in every drop.</p>
+          </motion.div>
+          <div className="flex-1 flex items-center justify-center min-h-0">
+            <InlineBottle size="h-[32vh] max-h-[280px]" />
+          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-left"
+          >
+            <p className="text-[10px] tracking-[0.4em] text-gold/70 uppercase mb-2">Luxury Herbal Hair Oil</p>
+            <p className="text-sm text-gold-soft/80 leading-relaxed">
+              Inspired by generations of hair-care rituals — a luxurious infusion of heritage botanicals for the hair you were meant to have.
+            </p>
+            <a href="#benefits" className="inline-block mt-3 text-[10px] tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1">
+              Discover the ritual ↓
+            </a>
+          </motion.div>
+        </div>
+      ) : (
+        <div className="w-full grid grid-cols-3 items-center gap-6">
+          <SectionFrame side="left">
+            <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">Riwaah Presents</p>
+            <h1 className="font-serif text-5xl md:text-6xl leading-[0.95] gold-gradient whitespace-nowrap">
+              NUR-E-ZULF
+            </h1>
+            <div className="ornate-divider w-32 ml-auto my-6" />
+            <p className="italic text-lg text-gold-soft/90 font-serif">Heritage in every drop.</p>
+          </SectionFrame>
+          <div />
+          <SectionFrame side="right">
+            <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">Luxury Herbal Hair Oil</p>
+            <h2 className="font-serif text-3xl md:text-4xl text-gold-soft leading-tight">
+              A royal blend, crafted with tradition, perfected by time.
+            </h2>
+            <div className="ornate-divider w-32 my-6" />
+            <p className="text-sm text-gold-soft/70 leading-relaxed max-w-sm">
+              Inspired by generations of hair-care rituals — a luxurious infusion of heritage botanicals and nourishing oils for the hair you were meant to have.
+            </p>
+            <a href="#benefits" className="inline-block mt-8 text-xs tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1 hover:border-gold transition">
+              Discover the ritual ↓
+            </a>
+          </SectionFrame>
+        </div>
+      )}
     </section>
   );
 }
