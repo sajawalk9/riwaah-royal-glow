@@ -241,35 +241,33 @@ const benefits = [
 function Benefits({ isMobile }: { isMobile: boolean }) {
   if (isMobile) {
     return (
-      <section id="benefits" className="relative z-20 min-h-screen flex flex-col items-center px-5 py-24">
+      <section id="benefits" className="relative z-20 snap-start h-screen flex flex-col items-center px-5 pt-20 pb-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.3 }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-8"
+          className="text-center mb-3"
         >
-          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">The Promise</p>
-          <h2 className="font-serif text-4xl gold-gradient">Benefits</h2>
-          <div className="ornate-divider w-24 mx-auto my-4" />
-          <p className="text-sm text-gold-soft/70 max-w-xs mx-auto">
-            Six botanicals. Five base oils. One ritual passed down through generations.
-          </p>
+          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-2">The Promise</p>
+          <h2 className="font-serif text-3xl gold-gradient">Benefits</h2>
+          <div className="ornate-divider w-20 mx-auto my-2" />
         </motion.div>
-        <InlineBottle size="h-[38vh] max-h-[320px]" />
-        <div className="w-full max-w-sm space-y-8 mt-6">
+        <div className="flex-1 min-h-0 flex items-center">
+          <InlineBottle size="h-[26vh] max-h-[220px]" />
+        </div>
+        <div className="w-full max-w-sm space-y-3">
           {benefits.map((b, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.4 }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
               className="text-center"
             >
-              <h3 className="font-serif text-2xl text-gold-soft mb-2">{b.title}</h3>
-              <div className="ornate-divider w-16 mx-auto mb-3" />
-              <p className="text-sm text-gold-soft/70 leading-relaxed">{b.desc}</p>
+              <h3 className="font-serif text-base text-gold-soft">{b.title}</h3>
+              <p className="text-[11px] text-gold-soft/70 leading-snug">{b.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -277,7 +275,7 @@ function Benefits({ isMobile }: { isMobile: boolean }) {
     );
   }
   return (
-    <section id="benefits" className="relative z-20 min-h-screen flex flex-col items-center px-6 md:px-16 py-32">
+    <section id="benefits" className="relative z-20 snap-start h-screen flex flex-col items-center px-6 md:px-16 py-24">
       <div className="w-full grid md:grid-cols-3 items-center gap-10 flex-1">
         <div className="space-y-10">
           <motion.div
