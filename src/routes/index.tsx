@@ -24,11 +24,10 @@ function Index() {
   const isMobile = useIsMobile();
 
   // Bottle motion — float, rotate, scale, slide left on final section
-  const bottleY = useTransform(scrollYProgress, [0, 1], [0, -30]);
+  const bottleY = useTransform(scrollYProgress, [0, 0.35, 0.5, 0.7, 0.85, 1], [0, 0, 55, 55, 0, -30]);
   const bottleRotate = useTransform(scrollYProgress, [0, 0.4, 0.75, 1], [-6, 4, -2, -10]);
-  // Shrink on ingredients section (~0.5–0.75) so the ring is dominant
-  // Shrink during ingredients (~0.5–0.75) so the ring dominates; return to size on closing
-  const bottleScale = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 0.85, 1], [1, 0.9, 0.45, 0.7, 0, 0]);
+  // Keep bottle visible inside the ring; scale down only at the very end
+  const bottleScale = useTransform(scrollYProgress, [0, 0.4, 0.6, 0.8, 0.85, 1], [1, 0.9, 0.75, 0.7, 0, 0]);
   const bottleX = useTransform(scrollYProgress, [0, 1], ["0%", "0%"]);
 
   // Background hue shifts subtly per section
@@ -68,8 +67,8 @@ function Index() {
             className="relative"
           >
             {/* Golden glow */}
-            <div className="absolute inset-0 -z-10 blur-3xl opacity-60"
-              style={{ background: "radial-gradient(circle, oklch(0.78 0.13 85 / 0.5), transparent 60%)" }} />
+            <div className="absolute inset-0 -z-10 blur-2xl opacity-40"
+              style={{ background: "radial-gradient(circle, oklch(0.78 0.13 85 / 0.45), transparent 55%)" }} />
             <img
               src={bottleAsset.url}
               alt="Riwaah Nur-E-Zulf Luxury Herbal Hair Oil bottle"
@@ -329,7 +328,7 @@ const ingredientClock = [
 
 function Ingredients({ isMobile }: { isMobile: boolean }) {
   return (
-    <section id="ingredients" className="relative z-30 snap-start h-screen flex flex-col items-center justify-center px-5 md:px-16 pt-20 pb-6 md:pt-24 md:pb-10 bg-background/40 overflow-hidden">
+    <section id="ingredients" className="relative z-30 snap-start h-screen flex flex-col items-center justify-center px-5 md:px-16 pt-20 pb-6 md:pt-24 md:pb-10 bg-background/20 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
