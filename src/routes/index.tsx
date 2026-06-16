@@ -329,7 +329,7 @@ const ingredientClock = [
 
 function Ingredients({ isMobile }: { isMobile: boolean }) {
   return (
-    <section id="ingredients" className="relative z-30 min-h-screen flex flex-col items-center justify-center px-5 md:px-16 py-24 md:py-32 bg-background/40">
+    <section id="ingredients" className="relative z-30 snap-start h-screen flex flex-col items-center justify-center px-5 md:px-16 py-16 bg-background/40">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -439,7 +439,7 @@ function IngredientClock({ showInnerBottle = false }: { showInnerBottle?: boolea
 function Closing({ isMobile }: { isMobile: boolean }) {
   if (isMobile) {
     return (
-      <section id="order" className="relative z-20 min-h-screen flex flex-col items-center px-5 py-24">
+      <section id="order" className="relative z-20 snap-start h-screen flex flex-col items-center justify-center px-5 py-16">
         <InlineBottle size="h-[40vh] max-h-[340px]" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -467,23 +467,22 @@ function Closing({ isMobile }: { isMobile: boolean }) {
     );
   }
   return (
-    <section id="order" className="relative z-20 min-h-screen flex items-center px-6 md:px-16 py-32">
-      <div className="w-full grid md:grid-cols-[1fr_1.1fr] gap-10 md:pl-[6%]">
-        <div className="hidden md:block" />
+    <section id="order" className="relative z-20 snap-start h-screen flex items-center justify-center px-6 md:px-16 py-24">
+      <div className="w-full flex items-center justify-center">
         <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.4 }}
           transition={{ duration: 1 }}
-          className="text-left md:pl-0 max-w-xl"
+          className="text-center max-w-xl"
         >
           <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-6">200 ML · Limited Heritage Batch</p>
           <h2 className="font-serif text-5xl md:text-6xl gold-gradient mb-6">Begin the Ritual</h2>
-          <div className="ornate-divider w-32 mb-6" />
-          <p className="text-gold-soft/70 mb-10 max-w-md">
+          <div className="ornate-divider w-32 mb-6 mx-auto" />
+          <p className="text-gold-soft/70 mb-10 max-w-md mx-auto">
             Crafted in small batches with no mineral oil, no parabens, no sulfates. Just heritage, bottled.
           </p>
-          <div className="flex items-center gap-4 flex-wrap">
+          <div className="flex items-center justify-center gap-4 flex-wrap">
             <a href="#" className="bg-gold text-olive-deep text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold-soft transition">
               Order — PKR 2,500
             </a>
