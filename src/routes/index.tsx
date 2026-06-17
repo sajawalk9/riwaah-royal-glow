@@ -150,7 +150,7 @@ function SectionFrame({ children, side }: { children: React.ReactNode; side: "le
 
 function InlineBottle({ size = "h-[55vh] max-h-[420px]" }: { size?: string }) {
   return (
-    <div className="relative flex justify-center">
+    <div className="relative flex justify-center my-8">
       <div className="absolute inset-0 -z-10 blur-3xl opacity-60"
         style={{ background: "radial-gradient(circle, oklch(0.78 0.13 85 / 0.5), transparent 60%)" }} />
       <motion.img
@@ -167,24 +167,24 @@ function InlineBottle({ size = "h-[55vh] max-h-[420px]" }: { size?: string }) {
 
 function Hero({ isMobile }: { isMobile: boolean }) {
   return (
-    <section className="relative z-20 snap-start h-screen flex items-center px-5 md:px-16 pt-16 md:pt-0">
+    <section className="relative z-20 snap-start h-screen flex items-center px-5 md:px-16 pt-20 md:pt-0">
       {isMobile ? (
-        <div className="w-full flex flex-col h-full pt-2 pb-4">
+        <div className="w-full flex flex-col h-full pt-4 pb-6">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-left"
           >
-            <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-2">Riwaah Presents</p>
-            <h1 className="font-serif text-3xl sm:text-4xl leading-[0.95] gold-gradient">
+            <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">Riwaah Presents</p>
+            <h1 className="font-serif text-4xl leading-[0.95] gold-gradient">
               NUR-E-ZULF
             </h1>
-            <div className="ornate-divider w-20 my-2" />
-            <p className="italic text-sm text-gold-soft/90 font-serif">Heritage in every drop.</p>
+            <div className="ornate-divider w-24 my-4" />
+            <p className="italic text-base text-gold-soft/90 font-serif">Heritage in every drop.</p>
           </motion.div>
-          <div className="flex-1 flex items-center justify-center min-h-0 my-1">
-            <InlineBottle size="h-[26vh] max-h-[230px]" />
+          <div className="flex-1 flex items-center justify-center min-h-0">
+            <InlineBottle size="h-[32vh] max-h-[280px]" />
           </div>
           <motion.div
             initial={{ opacity: 0, y: 12 }}
@@ -193,10 +193,10 @@ function Hero({ isMobile }: { isMobile: boolean }) {
             className="text-left"
           >
             <p className="text-[10px] tracking-[0.4em] text-gold/70 uppercase mb-2">Luxury Herbal Hair Oil</p>
-            <p className="text-[13px] text-gold-soft/80 leading-relaxed">
+            <p className="text-sm text-gold-soft/80 leading-relaxed">
               Inspired by generations of hair-care rituals — a luxurious infusion of heritage botanicals for the hair you were meant to have.
             </p>
-            <a href="#benefits" className="inline-block mt-2 text-[10px] tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1">
+            <a href="#benefits" className="inline-block mt-3 text-[10px] tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1">
               Discover the ritual ↓
             </a>
           </motion.div>
@@ -240,22 +240,22 @@ const benefits = [
 function Benefits({ isMobile }: { isMobile: boolean }) {
   if (isMobile) {
     return (
-      <section id="benefits" className="relative z-20 snap-start h-screen flex flex-col items-center px-5 pt-16 pb-4">
+      <section id="benefits" className="relative z-20 snap-start h-screen flex flex-col items-center px-5 pt-20 pb-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.3 }}
           transition={{ duration: 0.7 }}
-          className="text-center"
+          className="text-center mb-3"
         >
-          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-1">The Promise</p>
-          <h2 className="font-serif text-2xl gold-gradient">Benefits</h2>
-          <div className="ornate-divider w-16 mx-auto mt-1" />
+          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-2">The Promise</p>
+          <h2 className="font-serif text-3xl gold-gradient">Benefits</h2>
+          <div className="ornate-divider w-20 mx-auto my-2" />
         </motion.div>
-        <div className="flex items-center justify-center my-1">
-          <InlineBottle size="h-[24vh] max-h-[200px]" />
+        <div className="flex-1 min-h-0 flex items-center">
+          <InlineBottle size="h-[26vh] max-h-[220px]" />
         </div>
-        <div className="w-full max-w-sm space-y-2 flex-1 flex flex-col justify-end pb-2">
+        <div className="w-full max-w-sm space-y-3">
           {benefits.map((b, i) => (
             <motion.div
               key={i}
@@ -265,8 +265,8 @@ function Benefits({ isMobile }: { isMobile: boolean }) {
               transition={{ duration: 0.5, delay: i * 0.08 }}
               className="text-center"
             >
-              <h3 className="font-serif text-sm text-gold-soft">{b.title}</h3>
-              <p className="text-[11px] text-gold-soft/70 leading-snug px-2">{b.desc}</p>
+              <h3 className="font-serif text-base text-gold-soft">{b.title}</h3>
+              <p className="text-[11px] text-gold-soft/70 leading-snug">{b.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -328,22 +328,20 @@ const ingredientClock = [
 
 function Ingredients({ isMobile }: { isMobile: boolean }) {
   return (
-    <section id="ingredients" className="relative z-30 snap-start h-screen flex flex-col items-center justify-start md:justify-center px-5 md:px-16 pt-16 pb-4 md:pt-24 md:pb-10 bg-background/20 overflow-hidden">
+    <section id="ingredients" className="relative z-30 snap-start h-screen flex flex-col items-center justify-center px-5 md:px-16 pt-20 pb-6 md:pt-24 md:pb-10 bg-background/20 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.3 }}
         transition={{ duration: 0.8 }}
-        className="text-center mb-2 md:mb-6"
+        className="text-center mb-4 md:mb-6"
       >
-        <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-2">The Sacred Blend</p>
+        <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">The Sacred Blend</p>
         <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl gold-gradient">Heritage Ingredients</h2>
-        <div className="ornate-divider w-20 mx-auto mt-2" />
+        <div className="ornate-divider w-24 mx-auto mt-3" />
       </motion.div>
 
-      <div className="flex-1 w-full flex items-center justify-center min-h-0">
-        <IngredientClock showInnerBottle={isMobile} />
-      </div>
+      <IngredientClock showInnerBottle={isMobile} />
     </section>
   );
 }
@@ -441,32 +439,28 @@ function IngredientClock({ showInnerBottle = false }: { showInnerBottle?: boolea
 function Closing({ isMobile }: { isMobile: boolean }) {
   if (isMobile) {
     return (
-      <section id="order" className="relative z-20 snap-start min-h-screen flex flex-col items-center justify-center px-5 pt-16 pb-8">
-        <InlineBottle size="h-[28vh] max-h-[240px]" />
+      <section id="order" className="relative z-20 snap-start h-screen flex flex-col items-center justify-center px-5 py-16">
+        <InlineBottle size="h-[40vh] max-h-[340px]" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.3 }}
           transition={{ duration: 0.8 }}
-          className="text-center mt-4 max-w-sm"
+          className="text-center mt-6 max-w-sm"
         >
-          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-2">200 ML · Limited Heritage Batch</p>
-          <h2 className="font-serif text-3xl gold-gradient mb-2">Begin the Ritual</h2>
-          <div className="ornate-divider w-24 mx-auto mb-3" />
-          <p className="text-gold-soft/70 mb-4 text-[13px] leading-relaxed">
+          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">200 ML · Limited Heritage Batch</p>
+          <h2 className="font-serif text-4xl gold-gradient mb-4">Begin the Ritual</h2>
+          <div className="ornate-divider w-32 mx-auto mb-5" />
+          <p className="text-gold-soft/70 mb-8 text-sm">
             Crafted in small batches with no mineral oil, no parabens, no sulfates. Just heritage, bottled.
           </p>
-          <div className="flex flex-col items-center gap-2">
-            <a href="#" className="bg-gold text-olive-deep text-[11px] tracking-[0.3em] uppercase px-6 py-3 hover:bg-gold-soft transition w-full text-center">
+          <div className="flex flex-col items-center gap-3">
+            <a href="#" className="bg-gold text-olive-deep text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold-soft transition w-full text-center">
               Order — PKR 2,500
             </a>
-            <Link to="/story" className="border border-gold/60 text-gold text-[11px] tracking-[0.3em] uppercase px-6 py-3 hover:bg-gold/10 transition w-full text-center">
+            <Link to="/story" className="border border-gold/60 text-gold text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold/10 transition w-full text-center">
               Our Heritage
             </Link>
-          </div>
-          <div className="mt-6 pt-4 border-t border-gold/15">
-            <img src={logoAsset.url} alt="Riwaah" className="h-8 w-8 mx-auto opacity-80 mb-2" />
-            <p className="text-[9px] tracking-[0.4em] text-gold/60 uppercase">Riwaah · Crafted in Pakistan · © 2026</p>
           </div>
         </motion.div>
       </section>
@@ -505,7 +499,7 @@ function Closing({ isMobile }: { isMobile: boolean }) {
 
 function Footer() {
   return (
-    <footer className="hidden md:block relative z-20 border-t border-gold/15 px-6 md:px-16 py-10 text-center">
+    <footer className="relative z-20 border-t border-gold/15 px-6 md:px-16 py-10 text-center">
       <img src={logoAsset.url} alt="Riwaah" className="h-12 w-12 mx-auto opacity-80 mb-3" />
       <p className="text-[10px] tracking-[0.5em] text-gold/60 uppercase">Riwaah · Crafted in Pakistan · © 2026</p>
     </footer>
