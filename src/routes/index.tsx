@@ -167,24 +167,24 @@ function InlineBottle({ size = "h-[55vh] max-h-[420px]" }: { size?: string }) {
 
 function Hero({ isMobile }: { isMobile: boolean }) {
   return (
-    <section className="relative z-20 snap-start h-screen flex items-center px-5 md:px-16 pt-20 md:pt-0">
+    <section className="relative z-20 snap-start h-screen flex items-center px-5 md:px-16 pt-16 md:pt-0">
       {isMobile ? (
-        <div className="w-full flex flex-col h-full pt-4 pb-6">
+        <div className="w-full flex flex-col h-full pt-2 pb-4">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-left"
           >
-            <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">Riwaah Presents</p>
-            <h1 className="font-serif text-4xl leading-[0.95] gold-gradient">
+            <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-2">Riwaah Presents</p>
+            <h1 className="font-serif text-3xl sm:text-4xl leading-[0.95] gold-gradient">
               NUR-E-ZULF
             </h1>
-            <div className="ornate-divider w-24 my-4" />
-            <p className="italic text-base text-gold-soft/90 font-serif">Heritage in every drop.</p>
+            <div className="ornate-divider w-20 my-2" />
+            <p className="italic text-sm text-gold-soft/90 font-serif">Heritage in every drop.</p>
           </motion.div>
-          <div className="flex-1 flex items-center justify-center min-h-0">
-            <InlineBottle size="h-[32vh] max-h-[280px]" />
+          <div className="flex-1 flex items-center justify-center min-h-0 my-1">
+            <InlineBottle size="h-[26vh] max-h-[230px]" />
           </div>
           <motion.div
             initial={{ opacity: 0, y: 12 }}
@@ -193,10 +193,10 @@ function Hero({ isMobile }: { isMobile: boolean }) {
             className="text-left"
           >
             <p className="text-[10px] tracking-[0.4em] text-gold/70 uppercase mb-2">Luxury Herbal Hair Oil</p>
-            <p className="text-sm text-gold-soft/80 leading-relaxed">
+            <p className="text-[13px] text-gold-soft/80 leading-relaxed">
               Inspired by generations of hair-care rituals — a luxurious infusion of heritage botanicals for the hair you were meant to have.
             </p>
-            <a href="#benefits" className="inline-block mt-3 text-[10px] tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1">
+            <a href="#benefits" className="inline-block mt-2 text-[10px] tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1">
               Discover the ritual ↓
             </a>
           </motion.div>
