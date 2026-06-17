@@ -441,28 +441,32 @@ function IngredientClock({ showInnerBottle = false }: { showInnerBottle?: boolea
 function Closing({ isMobile }: { isMobile: boolean }) {
   if (isMobile) {
     return (
-      <section id="order" className="relative z-20 snap-start h-screen flex flex-col items-center justify-center px-5 py-16">
-        <InlineBottle size="h-[40vh] max-h-[340px]" />
+      <section id="order" className="relative z-20 snap-start min-h-screen flex flex-col items-center justify-center px-5 pt-16 pb-8">
+        <InlineBottle size="h-[28vh] max-h-[240px]" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.3 }}
           transition={{ duration: 0.8 }}
-          className="text-center mt-6 max-w-sm"
+          className="text-center mt-4 max-w-sm"
         >
-          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-4">200 ML · Limited Heritage Batch</p>
-          <h2 className="font-serif text-4xl gold-gradient mb-4">Begin the Ritual</h2>
-          <div className="ornate-divider w-32 mx-auto mb-5" />
-          <p className="text-gold-soft/70 mb-8 text-sm">
+          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-2">200 ML · Limited Heritage Batch</p>
+          <h2 className="font-serif text-3xl gold-gradient mb-2">Begin the Ritual</h2>
+          <div className="ornate-divider w-24 mx-auto mb-3" />
+          <p className="text-gold-soft/70 mb-4 text-[13px] leading-relaxed">
             Crafted in small batches with no mineral oil, no parabens, no sulfates. Just heritage, bottled.
           </p>
-          <div className="flex flex-col items-center gap-3">
-            <a href="#" className="bg-gold text-olive-deep text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold-soft transition w-full text-center">
+          <div className="flex flex-col items-center gap-2">
+            <a href="#" className="bg-gold text-olive-deep text-[11px] tracking-[0.3em] uppercase px-6 py-3 hover:bg-gold-soft transition w-full text-center">
               Order — PKR 2,500
             </a>
-            <Link to="/story" className="border border-gold/60 text-gold text-xs tracking-[0.3em] uppercase px-8 py-4 hover:bg-gold/10 transition w-full text-center">
+            <Link to="/story" className="border border-gold/60 text-gold text-[11px] tracking-[0.3em] uppercase px-6 py-3 hover:bg-gold/10 transition w-full text-center">
               Our Heritage
             </Link>
+          </div>
+          <div className="mt-6 pt-4 border-t border-gold/15">
+            <img src={logoAsset.url} alt="Riwaah" className="h-8 w-8 mx-auto opacity-80 mb-2" />
+            <p className="text-[9px] tracking-[0.4em] text-gold/60 uppercase">Riwaah · Crafted in Pakistan · © 2026</p>
           </div>
         </motion.div>
       </section>
