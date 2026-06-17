@@ -150,7 +150,7 @@ function SectionFrame({ children, side }: { children: React.ReactNode; side: "le
 
 function InlineBottle({ size = "h-[55vh] max-h-[420px]" }: { size?: string }) {
   return (
-    <div className="relative flex justify-center my-8">
+    <div className="relative flex justify-center">
       <div className="absolute inset-0 -z-10 blur-3xl opacity-60"
         style={{ background: "radial-gradient(circle, oklch(0.78 0.13 85 / 0.5), transparent 60%)" }} />
       <motion.img
@@ -328,20 +328,22 @@ const ingredientClock = [
 
 function Ingredients({ isMobile }: { isMobile: boolean }) {
   return (
-    <section id="ingredients" className="relative z-30 snap-start h-screen flex flex-col items-center justify-center px-5 md:px-16 pt-20 pb-6 md:pt-24 md:pb-10 bg-background/20 overflow-hidden">
+    <section id="ingredients" className="relative z-30 snap-start h-screen flex flex-col items-center justify-start md:justify-center px-5 md:px-16 pt-16 pb-4 md:pt-24 md:pb-10 bg-background/20 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.3 }}
         transition={{ duration: 0.8 }}
-        className="text-center mb-4 md:mb-6"
+        className="text-center mb-2 md:mb-6"
       >
-        <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">The Sacred Blend</p>
+        <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-2">The Sacred Blend</p>
         <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl gold-gradient">Heritage Ingredients</h2>
-        <div className="ornate-divider w-24 mx-auto mt-3" />
+        <div className="ornate-divider w-20 mx-auto mt-2" />
       </motion.div>
 
-      <IngredientClock showInnerBottle={isMobile} />
+      <div className="flex-1 w-full flex items-center justify-center min-h-0">
+        <IngredientClock showInnerBottle={isMobile} />
+      </div>
     </section>
   );
 }
