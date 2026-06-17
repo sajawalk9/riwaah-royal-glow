@@ -167,24 +167,24 @@ function InlineBottle({ size = "h-[55vh] max-h-[420px]" }: { size?: string }) {
 
 function Hero({ isMobile }: { isMobile: boolean }) {
   return (
-    <section className="relative z-20 snap-start h-screen flex items-center px-5 md:px-16 pt-20 md:pt-0">
+    <section className="relative z-20 snap-start h-screen flex items-center px-5 md:px-16 pt-16 md:pt-0">
       {isMobile ? (
-        <div className="w-full flex flex-col h-full pt-4 pb-6">
+        <div className="w-full flex flex-col h-full pt-2 pb-5">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-left"
           >
-            <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">Riwaah Presents</p>
+            <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-2">Riwaah Presents</p>
             <h1 className="font-serif text-4xl leading-[0.95] gold-gradient">
               NUR-E-ZULF
             </h1>
-            <div className="ornate-divider w-24 my-4" />
+            <div className="ornate-divider w-24 my-3" />
             <p className="italic text-base text-gold-soft/90 font-serif">Heritage in every drop.</p>
           </motion.div>
-          <div className="flex-1 flex items-center justify-center min-h-0">
-            <InlineBottle size="h-[32vh] max-h-[280px]" />
+          <div className="flex-1 flex items-center justify-center min-h-0 my-2">
+            <InlineBottle size="h-[30vh] max-h-[260px]" />
           </div>
           <motion.div
             initial={{ opacity: 0, y: 12 }}
@@ -196,7 +196,7 @@ function Hero({ isMobile }: { isMobile: boolean }) {
             <p className="text-sm text-gold-soft/80 leading-relaxed">
               Inspired by generations of hair-care rituals — a luxurious infusion of heritage botanicals for the hair you were meant to have.
             </p>
-            <a href="#benefits" className="inline-block mt-3 text-[10px] tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1">
+            <a href="#benefits" className="inline-block mt-2 text-[10px] tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1">
               Discover the ritual ↓
             </a>
           </motion.div>
@@ -240,22 +240,22 @@ const benefits = [
 function Benefits({ isMobile }: { isMobile: boolean }) {
   if (isMobile) {
     return (
-      <section id="benefits" className="relative z-20 snap-start h-screen flex flex-col items-center px-5 pt-20 pb-6">
+      <section id="benefits" className="relative z-20 snap-start h-screen flex flex-col items-center px-5 pt-16 pb-5">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.3 }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-3"
+          className="text-center"
         >
-          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-2">The Promise</p>
+          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-1">The Promise</p>
           <h2 className="font-serif text-3xl gold-gradient">Benefits</h2>
           <div className="ornate-divider w-20 mx-auto my-2" />
         </motion.div>
-        <div className="flex-1 min-h-0 flex items-center">
-          <InlineBottle size="h-[26vh] max-h-[220px]" />
+        <div className="flex-1 min-h-0 flex items-center my-2">
+          <InlineBottle size="h-[22vh] max-h-[190px]" />
         </div>
-        <div className="w-full max-w-sm space-y-3">
+        <div className="w-full max-w-sm space-y-2">
           {benefits.map((b, i) => (
             <motion.div
               key={i}
@@ -328,13 +328,13 @@ const ingredientClock = [
 
 function Ingredients({ isMobile }: { isMobile: boolean }) {
   return (
-    <section id="ingredients" className="relative z-30 snap-start h-screen flex flex-col items-center justify-center px-5 md:px-16 pt-20 pb-6 md:pt-24 md:pb-10 bg-background/20 overflow-hidden">
+    <section id="ingredients" className="relative z-30 snap-start h-screen flex flex-col items-center justify-center px-5 md:px-16 pt-16 pb-6 md:pt-24 md:pb-10 bg-background/20 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.3 }}
         transition={{ duration: 0.8 }}
-        className="text-center mb-4 md:mb-6"
+        className="text-center mb-6 md:mb-6"
       >
         <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-3">The Sacred Blend</p>
         <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl gold-gradient">Heritage Ingredients</h2>
