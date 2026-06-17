@@ -505,7 +505,7 @@ function Closing({ isMobile }: { isMobile: boolean }) {
 
 function Footer() {
   return (
-    <footer className="relative z-20 border-t border-gold/15 px-6 md:px-16 py-10 text-center">
+    <footer className="hidden md:block relative z-20 border-t border-gold/15 px-6 md:px-16 py-10 text-center">
       <img src={logoAsset.url} alt="Riwaah" className="h-12 w-12 mx-auto opacity-80 mb-3" />
       <p className="text-[10px] tracking-[0.5em] text-gold/60 uppercase">Riwaah · Crafted in Pakistan · © 2026</p>
     </footer>
