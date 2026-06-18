@@ -45,7 +45,7 @@ function Index() {
   return (
     <main
       ref={containerRef}
-      className="relative h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth"
+      className={`relative h-screen overflow-y-scroll scroll-smooth ${isMobile ? "" : "snap-y snap-mandatory"}`}
     >
       {/* Animated background */}
       <motion.div style={{ backgroundColor: bgColor }} className="fixed inset-0 -z-20" />
@@ -167,7 +167,7 @@ function InlineBottle({ size = "h-[55vh] max-h-[420px]" }: { size?: string }) {
 
 function Hero({ isMobile }: { isMobile: boolean }) {
   return (
-    <section className="relative z-20 snap-start h-screen flex items-center px-5 md:px-16 pt-20 md:pt-0">
+    <section className="relative z-20 md:snap-start min-h-screen md:h-screen flex items-center px-5 md:px-16 pt-20 md:pt-0">
       {isMobile ? (
         <div className="w-full flex flex-col h-full pt-4 pb-6">
           <motion.div
@@ -198,6 +198,9 @@ function Hero({ isMobile }: { isMobile: boolean }) {
             </p>
             <a href="#benefits" className="inline-block mt-3 text-[10px] tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1">
               Discover the ritual ↓
+            </a>
+            <a href="#order" className="block mt-4 bg-gold text-olive-deep text-[11px] tracking-[0.3em] uppercase px-6 py-3 text-center hover:bg-gold-soft transition">
+              Order Now — PKR 2,500
             </a>
           </motion.div>
         </div>
