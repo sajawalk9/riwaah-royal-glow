@@ -45,7 +45,7 @@ function Index() {
   return (
     <main
       ref={containerRef}
-      className="relative h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth"
+      className={`relative h-screen overflow-y-scroll scroll-smooth ${isMobile ? "" : "snap-y snap-mandatory"}`}
     >
       {/* Animated background */}
       <motion.div style={{ backgroundColor: bgColor }} className="fixed inset-0 -z-20" />
@@ -167,7 +167,7 @@ function InlineBottle({ size = "h-[55vh] max-h-[420px]" }: { size?: string }) {
 
 function Hero({ isMobile }: { isMobile: boolean }) {
   return (
-    <section className="relative z-20 snap-start h-screen flex items-center px-5 md:px-16 pt-20 md:pt-0">
+    <section className="relative z-20 md:snap-start min-h-screen md:h-screen flex items-center px-5 md:px-16 pt-20 md:pt-0">
       {isMobile ? (
         <div className="w-full flex flex-col h-full pt-4 pb-6">
           <motion.div
@@ -198,6 +198,9 @@ function Hero({ isMobile }: { isMobile: boolean }) {
             </p>
             <a href="#benefits" className="inline-block mt-3 text-[10px] tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1">
               Discover the ritual ↓
+            </a>
+            <a href="#order" className="block mt-4 bg-gold text-olive-deep text-[11px] tracking-[0.3em] uppercase px-6 py-3 text-center hover:bg-gold-soft transition">
+              Order Now — PKR 2,500
             </a>
           </motion.div>
         </div>
@@ -240,7 +243,7 @@ const benefits = [
 function Benefits({ isMobile }: { isMobile: boolean }) {
   if (isMobile) {
     return (
-      <section id="benefits" className="relative z-20 snap-start h-screen flex flex-col items-center px-5 pt-20 pb-6">
+      <section id="benefits" className="relative z-20 md:snap-start min-h-screen md:h-screen flex flex-col items-center px-5 pt-20 pb-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -274,7 +277,7 @@ function Benefits({ isMobile }: { isMobile: boolean }) {
     );
   }
   return (
-    <section id="benefits" className="relative z-20 snap-start h-screen flex flex-col items-center px-6 md:px-16 py-24">
+    <section id="benefits" className="relative z-20 md:snap-start min-h-screen md:h-screen flex flex-col items-center px-6 md:px-16 py-24">
       <div className="w-full grid md:grid-cols-3 items-center gap-10 flex-1">
         <div className="space-y-10">
           <motion.div
@@ -328,7 +331,7 @@ const ingredientClock = [
 
 function Ingredients({ isMobile }: { isMobile: boolean }) {
   return (
-    <section id="ingredients" className="relative z-30 snap-start h-screen flex flex-col items-center justify-center px-5 md:px-16 pt-20 pb-6 md:pt-24 md:pb-10 bg-background/20 overflow-hidden">
+    <section id="ingredients" className="relative z-30 md:snap-start min-h-screen md:h-screen flex flex-col items-center justify-center px-5 md:px-16 pt-20 pb-6 md:pt-24 md:pb-10 bg-background/20 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -439,7 +442,7 @@ function IngredientClock({ showInnerBottle = false }: { showInnerBottle?: boolea
 function Closing({ isMobile }: { isMobile: boolean }) {
   if (isMobile) {
     return (
-      <section id="order" className="relative z-20 snap-start h-screen flex flex-col items-center justify-center px-5 py-16">
+      <section id="order" className="relative z-20 md:snap-start min-h-screen md:h-screen flex flex-col items-center justify-center px-5 py-16">
         <InlineBottle size="h-[40vh] max-h-[340px]" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -467,7 +470,7 @@ function Closing({ isMobile }: { isMobile: boolean }) {
     );
   }
   return (
-    <section id="order" className="relative z-20 snap-start h-screen flex items-center justify-center px-6 md:px-16 py-24">
+    <section id="order" className="relative z-20 md:snap-start min-h-screen md:h-screen flex items-center justify-center px-6 md:px-16 py-24">
       <div className="w-full flex flex-col items-center justify-center gap-6">
         <InlineBottle size="h-[38vh] max-h-[340px]" />
         <motion.div
