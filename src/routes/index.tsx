@@ -169,7 +169,7 @@ function Hero({ isMobile }: { isMobile: boolean }) {
   return (
     <section className="relative z-20 md:snap-start min-h-screen md:h-screen flex items-center px-5 md:px-16 pt-20 md:pt-0">
       {isMobile ? (
-        <div className="w-full flex flex-col h-full pt-4 pb-6">
+        <div className="w-full flex flex-col pt-4 pb-6">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -183,7 +183,7 @@ function Hero({ isMobile }: { isMobile: boolean }) {
             <div className="ornate-divider w-24 my-4" />
             <p className="italic text-base text-gold-soft/90 font-serif">Heritage in every drop.</p>
           </motion.div>
-          <div className="flex-1 flex items-center justify-center min-h-0">
+          <div className="flex items-center justify-center my-3">
             <InlineBottle size="h-[32vh] max-h-[280px]" />
           </div>
           <motion.div
@@ -199,10 +199,10 @@ function Hero({ isMobile }: { isMobile: boolean }) {
             <a href="#benefits" className="inline-block mt-3 text-[10px] tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1">
               Discover the ritual ↓
             </a>
-            <a href="#order" className="block mt-4 bg-gold text-olive-deep text-[11px] tracking-[0.3em] uppercase px-6 py-3 text-center hover:bg-gold-soft transition">
-              Order Now — PKR 2,500
-            </a>
           </motion.div>
+          <a href="#order" className="block my-3 bg-gold text-olive-deep text-[11px] tracking-[0.3em] uppercase px-6 py-3 text-center hover:bg-gold-soft transition">
+            Order Now — PKR 2,500
+          </a>
         </div>
       ) : (
         <div className="w-full grid grid-cols-3 items-center gap-6">
