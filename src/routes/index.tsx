@@ -199,10 +199,10 @@ function Hero({ isMobile }: { isMobile: boolean }) {
             <a href="#benefits" className="inline-block mt-3 text-[10px] tracking-[0.3em] uppercase text-gold border-b border-gold/40 pb-1">
               Discover the ritual ↓
             </a>
-            <a href="#order" className="block mt-4 bg-gold text-olive-deep text-[11px] tracking-[0.3em] uppercase px-6 py-3 text-center hover:bg-gold-soft transition">
-              Order Now — PKR 2,500
-            </a>
           </motion.div>
+          <a href="#order" className="block my-3 bg-gold text-olive-deep text-[11px] tracking-[0.3em] uppercase px-6 py-3 text-center hover:bg-gold-soft transition">
+            Order Now — PKR 2,500
+          </a>
         </div>
       ) : (
         <div className="w-full grid grid-cols-3 items-center gap-6">
