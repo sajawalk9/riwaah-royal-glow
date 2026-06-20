@@ -243,7 +243,7 @@ const benefits = [
 function Benefits({ isMobile }: { isMobile: boolean }) {
   if (isMobile) {
     return (
-      <section id="benefits" className="relative z-20 md:snap-start min-h-screen md:h-screen flex flex-col items-center px-5 pt-16 pb-6">
+      <section id="benefits" className="relative z-20 flex flex-col items-center px-5 pt-12 pb-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
