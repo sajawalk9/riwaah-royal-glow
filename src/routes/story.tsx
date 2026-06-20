@@ -41,14 +41,14 @@ function Story() {
           <div className="ornate-divider w-32 mx-auto" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="grid md:grid-cols-[1.2fr_1fr] gap-10 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.9 }}
           >
-            <img src={bottleAsset.url} alt="Nur-E-Zulf bottle" className="w-auto h-[35vh] max-h-[280px] mx-auto object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]" />
+            <img src={bottleAsset.url} alt="Nur-E-Zulf bottle" className="w-auto h-[75vh] max-h-[640px] mx-auto object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]" />
           </motion.div>
 
           <motion.div
