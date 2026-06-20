@@ -243,22 +243,22 @@ const benefits = [
 function Benefits({ isMobile }: { isMobile: boolean }) {
   if (isMobile) {
     return (
-      <section id="benefits" className="relative z-20 md:snap-start min-h-screen md:h-screen flex flex-col items-center px-5 pt-20 pb-6">
+      <section id="benefits" className="relative z-20 md:snap-start min-h-screen md:h-screen flex flex-col items-center px-5 pt-16 pb-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.3 }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-3"
+          className="text-center mb-1"
         >
-          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-2">The Promise</p>
-          <h2 className="font-serif text-3xl gold-gradient">Benefits</h2>
-          <div className="ornate-divider w-20 mx-auto my-2" />
+          <p className="text-[10px] tracking-[0.5em] text-gold/70 uppercase mb-1">The Promise</p>
+          <h2 className="font-serif text-2xl gold-gradient">Benefits</h2>
+          <div className="ornate-divider w-16 mx-auto my-1" />
         </motion.div>
-        <div className="flex-1 min-h-0 flex items-center">
-          <InlineBottle size="h-[26vh] max-h-[220px]" />
+        <div className="flex items-center justify-center">
+          <InlineBottle size="h-[22vh] max-h-[180px]" />
         </div>
-        <div className="w-full max-w-sm space-y-3">
+        <div className="w-full max-w-sm space-y-2 mt-1">
           {benefits.map((b, i) => (
             <motion.div
               key={i}
@@ -268,8 +268,8 @@ function Benefits({ isMobile }: { isMobile: boolean }) {
               transition={{ duration: 0.5, delay: i * 0.08 }}
               className="text-center"
             >
-              <h3 className="font-serif text-base text-gold-soft">{b.title}</h3>
-              <p className="text-[11px] text-gold-soft/70 leading-snug">{b.desc}</p>
+              <h3 className="font-serif text-sm text-gold-soft">{b.title}</h3>
+              <p className="text-[10px] text-gold-soft/70 leading-snug px-2">{b.desc}</p>
             </motion.div>
           ))}
         </div>
