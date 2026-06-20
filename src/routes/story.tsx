@@ -48,7 +48,7 @@ function Story() {
             viewport={{ once: true }}
             transition={{ duration: 0.9 }}
           >
-            <img src={bottleAsset.url} alt="Nur-E-Zulf bottle" className="w-auto h-[60vh] max-h-[480px] mx-auto object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]" />
+            <img src={bottleAsset.url} alt="Nur-E-Zulf bottle" className="w-auto h-[35vh] max-h-[280px] mx-auto object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]" />
           </motion.div>
 
           <motion.div
