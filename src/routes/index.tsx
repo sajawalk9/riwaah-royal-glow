@@ -148,9 +148,9 @@ function SectionFrame({ children, side }: { children: React.ReactNode; side: "le
   );
 }
 
-function InlineBottle({ size = "h-[55vh] max-h-[420px]" }: { size?: string }) {
+function InlineBottle({ size = "h-[55vh] max-h-[420px]", margin = "my-8" }: { size?: string; margin?: string }) {
   return (
-    <div className="relative flex justify-center my-8">
+    <div className={`relative flex justify-center ${margin}`}>
       <div className="absolute inset-0 -z-10 blur-3xl opacity-60"
         style={{ background: "radial-gradient(circle, oklch(0.78 0.13 85 / 0.5), transparent 60%)" }} />
       <motion.img
@@ -256,7 +256,7 @@ function Benefits({ isMobile }: { isMobile: boolean }) {
           <div className="ornate-divider w-16 mx-auto my-1" />
         </motion.div>
         <div className="flex items-center justify-center">
-          <InlineBottle size="h-[22vh] max-h-[180px]" />
+          <InlineBottle size="h-[22vh] max-h-[180px]" margin="my-2" />
         </div>
         <div className="w-full max-w-sm space-y-2 mt-1">
           {benefits.map((b, i) => (
